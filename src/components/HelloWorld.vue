@@ -172,9 +172,9 @@ export default {
 /* Wheel of Fortune Styles */
 .wheel-of-fortune-container {
   position: relative;
-  width: 400px;
-  height: 400px;
-  margin: 140px auto;
+  width: 250px;
+  height: 250px;
+  margin: 280px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,8 +186,8 @@ export default {
 }
 
 .wheel {
-  width: 360px;
-  height: 360px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   position: relative;
   transition: transform 6s cubic-bezier(0.23, 1, 0.32, 1);
