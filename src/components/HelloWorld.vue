@@ -8,19 +8,25 @@
       <img src="../assets/level-3.png" alt="level-3" />
     </div>
     <div v-if="showCard" class="vue-flip-container">
-      <vue-flip active-click="true" width="200px" height="50px">
-        <template v-slot:front>
-          <div class="front">
-            <img src="../assets/back.jpeg" alt="card-front" />
-          </div>
-        </template>
-        <template v-slot:back>
-          <div class="back">
-            <img :src="getCardImage" alt="card-back" />
-          </div>
-        </template>
-      </vue-flip>
+      <Carousel3d :on-main-slide-click="onSelect" :height="500">
+        <Slide v-for="(slide, index) in 5" :index="index" :key="index">
+          <vue-flip active-click="true">
+            <template v-slot:front>
+              <div class="front">
+                <img src="../assets/back.jpeg" alt="card-front" />
+              </div>
+            </template>
+            <template v-slot:back>
+              <div class="back">
+                <img :src="getCardImage(slide)" alt="card-back" />
+              </div>
+            </template>
+          </vue-flip>
+        </Slide>
+      </Carousel3d>
     </div>
+    
+
     <!-- Wheel of Fortune Section -->
     <div  v-if="showSpin" class="wheel-of-fortune-container">
       <div class="wheel" :style="{ transform: `rotate(${rotation}deg)` }">
@@ -82,11 +88,15 @@ export default {
     }
   },
   computed: {
-    getCardImage() {
-      return require(`../assets/${this.getPrize}.jpeg`);
-    }
+    
   },
   methods: {
+    getCardImage(slide) {
+      return require(`../assets/${slide}.jpeg`);
+    },
+    onSelect() {
+      console.log('onMainSlideClick');
+    },
     handleWinner(winner) {
       let prize = parseInt(winner.text);
       if(prize === 8) {

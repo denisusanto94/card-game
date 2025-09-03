@@ -8,8 +8,11 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@nanoandrew4/vue3-carousel-3d": "^1.0.2",
+    "@syncfusion/ej2-vue-lineargauge": "^30.2.4",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
+    "vue-carousel-3d": "^1.0.1",
     "vue-flip": "^3.0.2",
     "vue-wheel-spinner": "^0.2.8",
     "vue-winwheel": "^1.0.0",
