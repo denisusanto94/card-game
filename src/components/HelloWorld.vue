@@ -8,8 +8,8 @@
       <img src="../assets/level-3.png" alt="level-3" />
     </div>
     <div v-if="showCard" class="vue-flip-container">
-      <Carousel3d :on-main-slide-click="onSelect" :height="500">
-        <Slide v-for="(slide, index) in 5" :index="index" :key="index">
+      <Carousel3d :on-main-slide-click="onSelect" :width="280" :height="390">
+        <Slide v-for="(slide, index) in 5" :index="index" :key="index" style="background-color: #ffffff00; border: none;">
           <vue-flip active-click="true">
             <template v-slot:front>
               <div class="front">
@@ -25,7 +25,9 @@
         </Slide>
       </Carousel3d>
     </div>
-    
+    <div class="progress-bar-container">
+      <img src="../assets/progress-60.png" alt="progress-bar" />
+    </div>
 
     <!-- Wheel of Fortune Section -->
     <div  v-if="showSpin" class="wheel-of-fortune-container">
@@ -167,14 +169,28 @@ export default {
   align-items: center; /* align vertical */
 }
 
-.front img {
+.vue-flip-container .front img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.back img {
+.vue-flip-container .back img {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.progress-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.progress-bar-container img {
+  width: 90%;
   height: 100%;
   object-fit: contain;
 }
