@@ -1,0 +1,725 @@
+/* Main CSS for Card Game */
+
+.hello {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('../bg.jpg');
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.level-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.level-container img {
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.level-container img:hover {
+  transform: scale(1.1);
+}
+
+/* Card Display Styles */
+.vue-flip-container {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  transition: all 0.5s ease-in-out;
+}
+
+.vue-flip-container.shuffle-hide {
+  opacity: 0;
+  transform: scale(0.8) rotateY(180deg);
+  filter: blur(5px);
+}
+
+.vue-flip-container.shuffle-show {
+  animation: shuffleShow 0.6s ease-out;
+}
+
+@keyframes shuffleShow {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotateY(-180deg);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) rotateY(-90deg);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+    filter: blur(0px);
+  }
+}
+
+.vue-flip-container .front img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vue-flip-container .back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.progress-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.progress-bar-container img {
+  width: 90%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-controls-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.card-controls-container button {  
+  min-width: 160px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.reset-shuffle-button {
+  background: linear-gradient(145deg, #9b59b6, #8e44ad);
+  color: white;
+  width: 200px;
+}
+
+.reset-shuffle-button:hover {
+  background: linear-gradient(145deg, #8e44ad, #9b59b6);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
+}
+
+.reset-shuffle-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+}
+
+/* Shuffle Animation */
+.reset-shuffle-button.shuffle-animation {
+  animation: shuffleEffect 0.8s ease-in-out;
+}
+
+@keyframes shuffleEffect {
+  0% {
+    transform: scale(1) rotate(0deg);
+    background: linear-gradient(145deg, #9b59b6, #8e44ad);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+    background: linear-gradient(145deg, #f39c12, #e67e22);
+    box-shadow: 0 12px 35px rgba(243, 156, 18, 0.6);
+  }
+  75% {
+    transform: scale(1.1) rotate(-3deg);
+    background: linear-gradient(145deg, #27ae60, #2ecc71);
+    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.6);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    background: linear-gradient(145deg, #9b59b6, #8e44ad);
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+  }
+}
+
+/* Shuffle Success Effect */
+.reset-shuffle-button.shuffle-success {
+  animation: shuffleSuccess 0.5s ease-out;
+}
+
+@keyframes shuffleSuccess {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 30px rgba(46, 204, 113, 0.8);
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+    background: linear-gradient(145deg, #9b59b6, #8e44ad);
+  }
+}
+
+/* Wheel of Fortune Styles */
+.wheel-of-fortune-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 280px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 25px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.wheel {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 6s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 16px solid #2c3e50;
+  overflow: hidden;
+  background: transparent;
+  will-change: transform;
+  font-size: 0;
+  line-height: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  transform-origin: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  margin: 0;
+  padding: 0;
+  background: inherit;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  filter: brightness(1.1);
+  aspect-ratio: 1;
+  overflow: visible;
+}
+
+.segment:hover {
+  filter: brightness(1.15) contrast(1.1);
+  transform: scale(1.02);
+}
+
+.segment-text {
+  transform: rotate(318deg) translate(45px, 9px);
+  font-weight: bold;
+  color: white;
+  font-size: 30px;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+  text-align: center;
+  position: relative;
+  pointer-events: none;
+  z-index: 1000;
+  margin: 10px;
+}
+
+.pointer {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  z-index: 15;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.spin-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #e74c3c;
+  border: 5px solid white;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.spin-button:hover:not(:disabled) {
+  background: #c0392b;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.spin-button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.spin-button:active:not(:disabled) {
+  transform: translate(-50%, -50%) scale(0.92);
+}
+
+/* Level Display Styles */
+.level-display-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  color: white;
+}
+
+.level-display-container h3 {
+  text-align: center;
+  color: #ffd700;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.opened-cards-list {
+  display: none;
+}
+
+.opened-card-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 100px;
+  transition: transform 0.3s ease;
+}
+
+.opened-card-item:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.opened-card-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 2px solid #ffd700;
+}
+
+.opened-card-info {
+  text-align: center;
+}
+
+.card-name {
+  display: block;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 4px;
+}
+
+.card-level {
+  display: block;
+  font-size: 0.8em;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.total-level-display {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 10px;
+  border: 2px solid #ffd700;
+}
+
+.total-level-label {
+  font-size: 1.2em;
+  color: white;
+  margin-right: 10px;
+}
+
+.total-level-value {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Level Progression Styles */
+.level-progression {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 2px solid #4ecdc4;
+}
+
+.progression-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progression-label {
+  font-size: 1.1em;
+  color: #4ecdc4;
+  font-weight: bold;
+}
+
+.progression-level {
+  font-size: 1.3em;
+  color: #ffd700;
+  font-weight: bold;
+  background: rgba(255, 215, 0, 0.2);
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid #ffd700;
+}
+
+.progression-bar {
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progression-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ecdc4, #44a08d);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.progression-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progression-text {
+  text-align: center;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+}
+
+/* Responsive Background and Layout */
+@media (max-width: 768px) {
+  .hello {
+    background-attachment: scroll;
+    min-height: 100vh;
+    padding: 10px;
+  }
+  
+  .level-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .level-container img {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+  }
+  
+  .level-display-container {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .card-controls-container {
+    gap: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  
+  .card-controls-container button {
+    min-width: 140px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  
+  .reset-shuffle-button {
+    width: 180px;
+  }
+  
+  .opened-card-item {
+    min-width: 80px;
+    padding: 8px;
+  }
+  
+  .opened-card-image {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .wheel-of-fortune-container {
+    margin: 20px auto;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .wheel {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .segment-text {
+    font-size: 20px;
+    transform: rotate(318deg) translate(35px, 7px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hello {
+    padding: 5px;
+  }
+  
+  .level-container img {
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+  }
+  
+  .level-display-container {
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  .card-controls-container {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .card-controls-container button {
+    width: 100%;
+    max-width: 200px;
+    min-width: auto;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+  
+  .reset-shuffle-button {
+    width: 100%;
+    max-width: 180px;
+  }
+  
+  .opened-card-item {
+    width: 100%;
+    max-width: 200px;
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .opened-card-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+  
+  .opened-card-info {
+    text-align: left;
+  }
+  
+  .wheel-of-fortune-container {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .wheel {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .segment-text {
+    font-size: 18px;
+    transform: rotate(318deg) translate(30px, 6px);
+  }
+  
+  .spin-button {
+    width: 70px;
+    height: 70px;
+    font-size: 14px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hello {
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .level-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  
+  .level-container img {
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+  }
+  
+  .wheel-of-fortune-container {
+    margin: 10px auto;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hello {
+    background-image: url('../bg.jpg');
+    background-size: cover;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .hello {
+    padding: 2px;
+  }
+  
+  .level-container img {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+  }
+  
+  .level-display-container {
+    padding: 8px;
+  }
+  
+  .opened-card-item {
+    padding: 5px;
+  }
+  
+  .opened-card-image {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .wheel-of-fortune-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .wheel {
+    width: 170px;
+    height: 170px;
+  }
+  
+  .segment-text {
+    font-size: 16px;
+    transform: rotate(318deg) translate(25px, 5px);
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1400px) {
+  .hello {
+    background-attachment: fixed;
+  }
+  
+  .level-display-container {
+    max-width: 800px;
+  }
+  
+  .opened-cards-list {
+    justify-content: center;
+  }
+}
+
+/* Print styles */
+@media print {
+  .hello {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .level-display-container,
+  .wheel-of-fortune-container {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+  }
+}

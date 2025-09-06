@@ -7,26 +7,61 @@
       <img src="../assets/level-2.png" alt="level-2" />
       <img src="../assets/level-3.png" alt="level-3" />
     </div>
-    <div v-if="showCard" class="vue-flip-container">
+    <div v-if="showCard" class="vue-flip-container" :class="{ 'shuffle-show': isShuffling }">
       <Carousel3d :on-main-slide-click="onSelect" :width="280" :height="390">
-        <Slide v-for="(slide, index) in 5" :index="index" :key="index" style="background-color: #ffffff00; border: none;">
-          <vue-flip active-click="true">
+        <Slide v-for="(slide, index) in cards" :index="index" :key="index" style="background-color: #ffffff00; border: none;">
+          <vue-flip active-click>
             <template v-slot:front>
               <div class="front">
-                <img src="../assets/back.jpeg" alt="card-front" />
+                <img src="../assets/back.jpeg" alt="card-front"/>
               </div>
             </template>
             <template v-slot:back>
               <div class="back">
-                <img :src="getCardImage(slide)" alt="card-back" />
+                <img :src="getCardImage(slide.image)" alt="card-back" />
               </div>
             </template>
           </vue-flip>
         </Slide>
       </Carousel3d>
     </div>
-    <div class="progress-bar-container">
+    <div v-if="showCard" class="card-controls-container">
+      <button class="reset-shuffle-button" @click="resetAndShuffleCards">Reset & Shuffle Cards</button>
+    </div>
+    <!-- <div class="progress-bar-container">
       <img src="../assets/progress-60.png" alt="progress-bar" />
+    </div> -->
+
+    <!-- Level Display Section -->
+    <div v-if="openedCards.length > 0" class="level-display-container">
+      <h3>Opened Cards</h3>
+      <div class="opened-cards-list">
+        <div v-for="(card, index) in openedCards" :key="index" class="opened-card-item">
+          <img :src="getCardImage(card.image)" :alt="card.text" class="opened-card-image" />
+          <div class="opened-card-info">
+            <span class="card-name">{{ card.text }}</span>
+            <span class="card-level">Level: {{ card.level }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="total-level-display">
+        <span class="total-level-label">Total Level:</span>
+        <span class="total-level-value">{{ totalLevel }}</span>
+      </div>
+      
+      <!-- Level Progression -->
+      <div class="level-progression">
+        <div class="progression-header">
+          <span class="progression-label">Level Progress</span>
+          <span class="progression-level">{{ currentLevel }}</span>
+        </div>
+        <div class="progression-bar">
+          <div class="progression-fill" :style="{ width: levelProgressPercentage + '%' }"></div>
+        </div>
+        <div class="progression-text">
+          {{ levelProgressText }}
+        </div>
+      </div>
     </div>
 
     <!-- Wheel of Fortune Section -->
@@ -77,27 +112,62 @@ export default {
       showCard: true,
       rotation: 0,
       isSpinning: false,
+      isShuffling: false,
+      openedCards: [],
+      totalLevel: 0,
+      cards:[
+        {image: '1.jpeg', text: 'level 1', level:10, isOpened: false},
+        {image: '2.jpeg', text: 'level 2', level:10, isOpened: false},
+        {image: '3.jpeg', text: 'level 3', level:10, isOpened: false},
+        {image: '4.jpeg', text: 'level 4', level:10, isOpened: false},
+        {image: '5.jpeg', text: 'level 5', level:10, isOpened: false},
+        {image: '6.jpeg', text: 'level 6', level:10, isOpened: false},
+        {image: '7.jpeg', text: 'level 7', level:10, isOpened: false},
+        {image: '8.jpeg', text: 'level 8', level:30, isOpened: false},
+      ],
       segments: [
-        {color: '#FF6B6B', text: '1'},
-        {color: '#4ECDC4', text: '2'},
-        {color: '#45B7D1', text: '3'},
-        {color: '#96CEB4', text: '4'},
-        {color: '#FFEAA7', text: '5'},
-        {color: '#DDA0DD', text: '6'},
-        {color: '#98D8C8', text: '7'},
-        {color: '#F7DC6F', text: '8'}
+        {color: '#FF6B6B', text: '1', level:'5'},
+        {color: '#4ECDC4', text: '2', level:'5'},
+        {color: '#45B7D1', text: '3', level:'5'},
+        {color: '#96CEB4', text: '4', level:'5'},
+        {color: '#FFEAA7', text: '5', level:'10'},
+        {color: '#DDA0DD', text: '6', level:'15'},
+        {color: '#98D8C8', text: '7', level:'25'},
+        {color: '#F7DC6F', text: '8', level:'40'}
       ]
     }
   },
   computed: {
-    
+    currentLevel() {
+      // Calculate current level based on total level (every 50 levels = 1 level up)
+      return Math.floor(this.totalLevel / 50) + 1;
+    },
+    levelProgressPercentage() {
+      // Calculate progress within current level (0-100%)
+      const currentLevelStart = (this.currentLevel - 1) * 50;
+      const progressInLevel = this.totalLevel - currentLevelStart;
+      return Math.min((progressInLevel / 50) * 100, 100);
+    },
+    levelProgressText() {
+      const currentLevelStart = (this.currentLevel - 1) * 50;
+      const progressInLevel = this.totalLevel - currentLevelStart;
+      const nextLevelRequirement = 50;
+      return `${progressInLevel}/${nextLevelRequirement} XP to Level ${this.currentLevel + 1}`;
+    }
   },
   methods: {
-    getCardImage(slide) {
-      return require(`../assets/${slide}.jpeg`);
+    getCardImage(image) {
+      return require(`../assets/${image}`);
     },
     onSelect() {
-      console.log('onMainSlideClick');
+      // Find the current card that was clicked
+      const currentCard = this.cards.find(card => !card.isOpened);
+      if (currentCard) {
+        currentCard.isOpened = true;
+        this.openedCards.push({...currentCard});
+        this.totalLevel += currentCard.level;
+        console.log(`Opened ${currentCard.text} - Level ${currentCard.level}`);
+      }
     },
     handleWinner(winner) {
       let prize = parseInt(winner.text);
@@ -109,6 +179,41 @@ export default {
       this.getPrize = prize 
       this.showPrize = true
       this.showCard = true
+    },
+    resetAndShuffleCards() {
+      // Add button animation
+      const button = event.target
+      button.classList.add('shuffle-animation')
+      
+      // Set shuffling state
+      this.isShuffling = true
+      
+      // Hide cards for shuffle effect
+      this.showCard = false
+      this.showPrize = false
+      
+      // Reset all cards to unopened state
+      this.cards.forEach(card => {
+        card.isOpened = false
+      })
+      
+      // Reset opened cards and level tracking
+      this.openedCards = []
+      this.totalLevel = 0
+      
+      // Show cards again with shuffle effect
+      setTimeout(() => {
+        this.showCard = true
+        // Remove button animation and add success effect
+        button.classList.remove('shuffle-animation')
+        button.classList.add('shuffle-success')
+        setTimeout(() => {
+          this.isShuffling = false
+          button.classList.remove('shuffle-success')
+        }, 600) // Wait for shuffle-show animation to complete
+      }, 500)
+      
+      console.log('Cards reset and shuffled!')
     },
     spinWheel() {
       this.showCard = false
@@ -133,190 +238,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.hello {
-  margin: 0;
-  padding: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url('../assets/bg.jpg');
-  height: 100vh;
-}
-
-.level-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  img {
-    width: 80px;
-    height: 80px;
-    margin: 10px;
-    cursor: pointer;
-  } 
-  img:hover {
-    transform: scale(1.1);
-  }
-}
-
-/* Card Display Styles */
-.vue-flip-container {
-  display: flex;
-  justify-content: center; /* align horizontal */
-  align-items: center; /* align vertical */
-}
-
-.vue-flip-container .front img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.vue-flip-container .back img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.progress-bar-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.progress-bar-container img {
-  width: 90%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Wheel of Fortune Styles */
-.wheel-of-fortune-container {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  margin: 280px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border-radius: 25px;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.wheel {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  position: relative;
-  transition: transform 6s cubic-bezier(0.23, 1, 0.32, 1);
-  border: 16px solid #2c3e50;
-  overflow: hidden;
-  background: transparent;
-  will-change: transform;
-  font-size: 0;
-  line-height: 0;
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-
-.segment {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  transform-origin: 100% 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
-  margin: 0;
-  padding: 0;
-  background: inherit;
-  border: none;
-  outline: none;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  filter: brightness(1.1);
-  aspect-ratio: 1;
-  overflow: visible;
-}
-
-.segment:hover {
-  filter: brightness(1.15) contrast(1.1);
-  transform: scale(1.02);
-}
-
-.segment-text {
-  transform: rotate(318deg) translate(45px, 9px);
-  font-weight: bold;
-  color: white;
-  font-size: 30px;
-  white-space: nowrap;
-  letter-spacing: 0.2px;
-  text-align: center;
-  position: relative;
-  pointer-events: none;
-  z-index: 1000;
-  margin: 10px;
-}
-
-.pointer {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 40px;
-  z-index: 15;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: translateX(-50%) scale(1); }
-  50% { transform: translateX(-50%) scale(1.1); }
-  100% { transform: translateX(-50%) scale(1); }
-}
-
-.spin-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: #e74c3c;
-  border: 5px solid white;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 5;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.spin-button:hover:not(:disabled) {
-  background: #c0392b;
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.spin-button:disabled {
-  background: #95a5a6;
-  cursor: not-allowed;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.spin-button:active:not(:disabled) {
-  transform: translate(-50%, -50%) scale(0.92);
-}
+<style>
+@import '../assets/style/main.css';
 </style>
