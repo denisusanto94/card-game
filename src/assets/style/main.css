@@ -38,23 +38,470 @@ html, body {
   transition: background-image 0.5s ease-in-out;
 }
 
-.level-container {
+/* Background Effects */
+.background-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: particleFloat 15s linear infinite;
+}
+
+.particle:nth-child(odd) {
+  animation-duration: 10s;
+}
+
+.particle:nth-child(even) {
+  animation-duration: 20s;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.gradient-orbs {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+  animation: orbFloat 25s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 250px;
+  height: 250px;
+  top: 15%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 180px;
+  height: 180px;
+  top: 65%;
+  right: 20%;
+  animation-delay: 8s;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  bottom: 25%;
+  left: 60%;
+  animation-delay: 16s;
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-25px) scale(1.05);
+    opacity: 0.4;
+  }
+}
+
+
+/* User Avatar Container */
+.user-avatar-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  animation: slideInLeft 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.user-avatar {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.user-avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-avatar.active {
+  transform: scale(1.05);
+}
+
+.avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 8px 20px rgba(102, 126, 234, 0.3),
+    0 0 0 3px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-circle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 50%;
+}
+
+.avatar-text {
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-status {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background: #4ade80;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* User Dropdown Menu */
+.user-dropdown {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  min-width: 250px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: dropdownSlide 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+}
+
+.dropdown-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.dropdown-avatar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  border-radius: 50%;
+}
+
+.dropdown-avatar-text {
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.dropdown-info {
+  flex: 1;
+}
+
+.dropdown-name {
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.dropdown-type {
+  color: #666;
+  font-size: 12px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0 20px;
+}
+
+.dropdown-actions {
+  padding: 15px 20px 20px 20px;
+}
+
+.dropdown-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.dropdown-logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(135deg, #ff5252, #e53935);
+}
+
+.dropdown-logout:active {
+  transform: translateY(0);
+}
+
+.logout-icon {
+  font-size: 18px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
+}
+
+.dropdown-logout:hover .logout-icon {
+  transform: scale(1.1);
+}
+
+/* Enhanced Level Display */
+.level-display-section {
+  position: relative;
+  z-index: 10;
+  margin: 60px 0 30px 0;
+  padding: 0 20px;
+}
+
+.level-badges {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  gap: 25px;
+  margin-bottom: 25px;
 }
 
-.level-container img {
-  width: 80px;
-  height: 80px;
-  margin: 10px;
-  cursor: pointer;
+.level-badge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.5;
+  transition: all 0.4s ease;
 }
 
-.level-container img:hover {
+.level-badge.active {
+  opacity: 1;
+}
+
+.level-badge.current {
+  opacity: 1;
   transform: scale(1.1);
+}
+
+.level-badge img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  border: 2px solid transparent;
+}
+
+.level-badge.active img {
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.level-badge.current img {
+  border-color: rgba(102, 126, 234, 0.7);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+  animation: levelPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes levelPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.level-number {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.level-info-card {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px);
+  border-radius: 18px;
+  padding: 25px;
+  margin: 0 auto;
+  max-width: 350px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.current-level-title {
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
+}
+
+.progress-section {
+  margin-top: 12px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: progressShine 2.5s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-text {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
 }
 
 /* Card Display Styles */
@@ -145,20 +592,63 @@ html, body {
 }
 
 .reset-shuffle-button {
-  background: linear-gradient(145deg, #9b59b6, #8e44ad);
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  background-size: 200% 200%;
   color: white;
-  width: 200px;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: buttonGradient 4s ease infinite;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 200px;
+  justify-content: center;
+}
+
+@keyframes buttonGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .reset-shuffle-button:hover {
-  background: linear-gradient(145deg, #8e44ad, #9b59b6);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
 }
 
 .reset-shuffle-button:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+  transform: translateY(-1px) scale(1.01);
+}
+
+.button-icon {
+  font-size: 18px;
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.button-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.reset-shuffle-button:hover .button-shine {
+  left: 100%;
 }
 
 /* Shuffle Animation */
@@ -567,7 +1057,6 @@ html, body {
 
 .dialog-button-yes:hover {
   background: linear-gradient(145deg, #c0392b, #e74c3c);
-  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 12px 35px rgba(231, 76, 60, 0.5);
   border-color: rgba(231, 76, 60, 0.6);
 }
@@ -580,13 +1069,12 @@ html, body {
 
 .dialog-button-no:hover {
   background: linear-gradient(145deg, #2ecc71, #27ae60);
-  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 12px 35px rgba(39, 174, 96, 0.5);
   border-color: rgba(39, 174, 96, 0.6);
 }
 
 .dialog-button:active {
-  transform: translateY(-1px) scale(1.02);
+  transform: scale(0.98);
 }
 
 .button-icon {
@@ -596,6 +1084,24 @@ html, body {
 
 /* Responsive Dialog */
 @media (max-width: 768px) {
+  .user-avatar-container {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .avatar-circle {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .avatar-text {
+    font-size: 14px;
+  }
+  
+  .user-dropdown {
+    min-width: 220px;
+  }
+  
   .dialog-container {
     max-width: 400px;
   }
@@ -633,6 +1139,52 @@ html, body {
 }
 
 @media (max-width: 480px) {
+  .user-avatar-container {
+    top: 10px;
+    left: 10px;
+  }
+  
+  .avatar-circle {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .avatar-text {
+    font-size: 12px;
+  }
+  
+  .avatar-status {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .user-dropdown {
+    min-width: 200px;
+    top: 55px;
+  }
+  
+  .dropdown-header {
+    padding: 15px;
+    gap: 12px;
+  }
+  
+  .dropdown-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .dropdown-avatar-text {
+    font-size: 12px;
+  }
+  
+  .dropdown-name {
+    font-size: 14px;
+  }
+  
+  .dropdown-type {
+    font-size: 11px;
+  }
+  
   .dialog-container {
     max-width: 350px;
   }

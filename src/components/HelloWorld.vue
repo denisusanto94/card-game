@@ -1,11 +1,72 @@
 <template>
   <div class="hello">
-    <!-- <h1 v-if="showPrize">Pokemon Anda: {{ getPrize }}</h1> -->
-    <!-- Card Display Section -->
-    <div class="level-container">
+    <!-- Animated Background Elements -->
+    <div class="background-effects">
+      <div class="floating-particles">
+        <div class="particle" v-for="n in 12" :key="n"></div>
+      </div>
+      <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+    </div>
+
+    <!-- User Avatar Navigation -->
+    <div class="user-avatar-container">
+      <div class="user-avatar" @click="toggleUserMenu" :class="{ 'active': showUserMenu }">
+        <div class="avatar-circle">
+          <span class="avatar-text">{{ getAvatarText(userData?.username || 'Player') }}</span>
+        </div>
+        <div class="avatar-status"></div>
+      </div>
+      
+      <!-- User Dropdown Menu -->
+      <div class="user-dropdown" v-if="showUserMenu" @click.stop>
+        <div class="dropdown-header">
+          <div class="dropdown-avatar">
+            <span class="dropdown-avatar-text">{{ getAvatarText(userData?.username || 'Player') }}</span>
+          </div>
+          <div class="dropdown-info">
+            <h4 class="dropdown-name">{{ userData?.username || 'Player' }}</h4>
+            <p class="dropdown-type">{{ userData?.isGuest ? 'Guest User' : 'Registered User' }}</p>
+          </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-actions">
+          <button @click="handleLogout" class="dropdown-logout">
+            <span class="logout-icon"></span>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Enhanced Level Display -->
+    <div class="level-display-section">
+      <div class="level-badges">
+        <div class="level-badge" :class="{ 'active': currentLevel >= 1, 'current': currentLevel === 1 }">
       <img src="../assets/level-1.png" alt="level-1" />
+          <span class="level-number">1</span>
+        </div>
+        <div class="level-badge" :class="{ 'active': currentLevel >= 2, 'current': currentLevel === 2 }">
       <img src="../assets/level-2.png" alt="level-2" />
+          <span class="level-number">2</span>
+        </div>
+        <div class="level-badge" :class="{ 'active': currentLevel >= 3, 'current': currentLevel === 3 }">
       <img src="../assets/level-3.png" alt="level-3" />
+          <span class="level-number">3</span>
+        </div>
+      </div>
+      <div class="level-info-card">
+        <h2 class="current-level-title">Level {{ currentLevel }}</h2>
+        <div class="progress-section">
+          <div class="progress-bar">
+            <div class="progress-fill" :style="{ width: levelProgressPercentage + '%' }"></div>
+          </div>
+          <span class="progress-text">{{ levelProgressText }}</span>
+        </div>
+      </div>
     </div>
     <div v-if="showCard" class="vue-flip-container" :class="{ 'shuffle-show': isShuffling }">
       <Carousel3d 
@@ -32,14 +93,18 @@
       </Carousel3d>
     </div>
     <div v-if="showCard" class="card-controls-container">
-      <button class="reset-shuffle-button" @click="resetAndShuffleCards">Reset & Shuffle Cards</button>
+      <button class="reset-shuffle-button" @click="resetAndShuffleCards">
+        <span class="button-icon">🔄</span>
+        <span class="button-text">Reset & Shuffle Cards</span>
+        <div class="button-shine"></div>
+      </button>
     </div>
     <!-- <div class="progress-bar-container">
       <img src="../assets/progress-60.png" alt="progress-bar" />
     </div> -->
 
     <!-- Level Display Section -->
-    <div v-if="openedCards.length > 0" class="level-display-container">
+    <div v-if="false" class="level-display-container">
       <h3>Opened Cards</h3>
       <div class="opened-cards-list">
         <div v-for="(card, index) in openedCards" :key="index" class="opened-card-item">
@@ -55,19 +120,6 @@
         <span class="total-level-value">{{ totalLevel }}</span>
       </div>
       
-      <!-- Level Progression -->
-      <div class="level-progression">
-        <div class="progression-header">
-          <span class="progression-label">Level Progress</span>
-          <span class="progression-level">{{ currentLevel }}</span>
-        </div>
-        <div class="progression-bar">
-          <div class="progression-fill" :style="{ width: levelProgressPercentage + '%' }"></div>
-        </div>
-        <div class="progression-text">
-          {{ levelProgressText }}
-        </div>
-      </div>
     </div>
 
     <!-- Music Control Section -->
@@ -209,6 +261,39 @@
       <source src="../assets/shuffle-cards.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
+
+    <!-- Open Dialog Sound Effect -->
+    <audio 
+      ref="openDialogSound" 
+      preload="auto"
+      @loadeddata="onOpenDialogSoundLoaded"
+      @error="onOpenDialogSoundError"
+    >
+      <source src="../assets/open-dialog.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Dialog Yes Sound Effect -->
+    <audio 
+      ref="dialogYesSound" 
+      preload="auto"
+      @loadeddata="onDialogYesSoundLoaded"
+      @error="onDialogYesSoundError"
+    >
+      <source src="../assets/dialog-yes.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Dialog No Sound Effect -->
+    <audio 
+      ref="dialogNoSound" 
+      preload="auto"
+      @loadeddata="onDialogNoSoundLoaded"
+      @error="onDialogNoSoundError"
+    >
+      <source src="../assets/dialog-no.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>      
 </template>
 
@@ -221,7 +306,11 @@ export default {
   },
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    userData: {
+      type: Object,
+      default: () => null
+    }
   },
   data() {
     return {
@@ -234,15 +323,19 @@ export default {
       isShuffling: false,
       openedCards: [],
       totalLevel: 0,
-      isMusicPlaying: false,
+      isMusicPlaying: true,
       musicLoaded: false,
       autoplayAttempted: false,
       openCardSoundLoaded: false,
       swipeSoundLoaded: false,
       levelUpSoundLoaded: false,
       shuffleSoundLoaded: false,
+      openDialogSoundLoaded: false,
+      dialogYesSoundLoaded: false,
+      dialogNoSoundLoaded: false,
       previousLevel: 1,
       showResetDialog: false,
+      showUserMenu: false,
       cards:[
         {image: '1.jpeg', text: 'level 1', level:10, isOpened: false},
         {image: '2.jpeg', text: 'level 2', level:10, isOpened: false},
@@ -395,10 +488,16 @@ export default {
       this.showCard = true
     },
     resetAndShuffleCards() {
+      // Play open dialog sound effect
+      this.playOpenDialogSound();
+      
       // Show confirmation dialog instead of immediately resetting
       this.showResetDialog = true;
     },
     confirmReset() {
+      // Play dialog yes sound effect
+      this.playDialogYesSound();
+      
       // Close dialog
       this.showResetDialog = false;
       
@@ -425,6 +524,9 @@ export default {
       this.openedCards = []
       this.totalLevel = 0
       
+      // Change background music to Level 1 music since we're resetting to Level 1
+      this.changeToLevel1Music();
+      
       // Show cards again with shuffle effect
       setTimeout(() => {
         this.showCard = true
@@ -440,7 +542,37 @@ export default {
       console.log('Cards reset and shuffled!')
     },
     closeResetDialog() {
+      // Play dialog no sound effect
+      this.playDialogNoSound();
+      
       this.showResetDialog = false;
+    },
+    changeToLevel1Music() {
+      if (!this.musicLoaded) {
+        console.log('Music not loaded yet, will change when loaded');
+        return;
+      }
+
+      const audio = this.$refs.backgroundMusic;
+      if (audio && this.isMusicPlaying) {
+        // Store current playing state
+        const wasPlaying = this.isMusicPlaying;
+        
+        // Change the source to Level 1 music
+        audio.src = require('../assets/bgm-lvl-1.mp3');
+        
+        // Reload the audio
+        audio.load();
+        
+        // Resume playing if it was playing before
+        if (wasPlaying) {
+          audio.play().then(() => {
+            console.log('Background music changed to Level 1 music after reset');
+          }).catch(error => {
+            console.log('Failed to play Level 1 music after reset:', error);
+          });
+        }
+      }
     },
     spinWheel() {
       this.showCard = false
@@ -496,6 +628,18 @@ export default {
       if (!this.autoplayAttempted) {
         this.attemptAutoplay();
       }
+      
+      // Also try immediate autoplay
+      const audio = this.$refs.backgroundMusic;
+      if (audio && this.isMusicPlaying) {
+        audio.volume = 0.7;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('Immediate autoplay failed:', error);
+          });
+        }
+      }
     },
     onMusicError(error) {
       console.error('Error loading background music:', error);
@@ -518,6 +662,9 @@ export default {
       const audio = this.$refs.backgroundMusic;
       
       if (audio) {
+        // Set volume to ensure it's audible
+        audio.volume = 0.7;
+        
         const playPromise = audio.play();
         
         if (playPromise !== undefined) {
@@ -526,8 +673,9 @@ export default {
             console.log('Autoplay successful - music started');
           }).catch(error => {
             console.log('Autoplay prevented by browser:', error);
-            this.isMusicPlaying = false;
-            // Don't show alert for autoplay failure, just log it
+            // Keep music state as playing even if autoplay fails
+            // User can manually start it with the button
+            this.isMusicPlaying = true;
           });
         }
       }
@@ -655,6 +803,116 @@ export default {
     onShuffleSoundError(error) {
       console.error('Error loading shuffle sound:', error);
       this.shuffleSoundLoaded = false;
+    },
+    playOpenDialogSound() {
+      if (!this.openDialogSoundLoaded) {
+        console.log('Open dialog sound not loaded yet');
+        return;
+      }
+
+      const openDialogAudio = this.$refs.openDialogSound;
+      if (openDialogAudio) {
+        // Reset audio to beginning and play
+        openDialogAudio.currentTime = 0;
+        const playPromise = openDialogAudio.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log('Open dialog sound played');
+          }).catch(error => {
+            console.log('Open dialog sound play failed:', error);
+          });
+        }
+      }
+    },
+    onOpenDialogSoundLoaded() {
+      this.openDialogSoundLoaded = true;
+      console.log('Open dialog sound loaded successfully');
+    },
+    onOpenDialogSoundError(error) {
+      console.error('Error loading open dialog sound:', error);
+      this.openDialogSoundLoaded = false;
+    },
+    playDialogYesSound() {
+      if (!this.dialogYesSoundLoaded) {
+        console.log('Dialog yes sound not loaded yet');
+        return;
+      }
+
+      const dialogYesAudio = this.$refs.dialogYesSound;
+      if (dialogYesAudio) {
+        // Reset audio to beginning and play
+        dialogYesAudio.currentTime = 0;
+        const playPromise = dialogYesAudio.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log('Dialog yes sound played');
+          }).catch(error => {
+            console.log('Dialog yes sound play failed:', error);
+          });
+        }
+      }
+    },
+    onDialogYesSoundLoaded() {
+      this.dialogYesSoundLoaded = true;
+      console.log('Dialog yes sound loaded successfully');
+    },
+    onDialogYesSoundError(error) {
+      console.error('Error loading dialog yes sound:', error);
+      this.dialogYesSoundLoaded = false;
+    },
+    playDialogNoSound() {
+      if (!this.dialogNoSoundLoaded) {
+        console.log('Dialog no sound not loaded yet');
+        return;
+      }
+
+      const dialogNoAudio = this.$refs.dialogNoSound;
+      if (dialogNoAudio) {
+        // Reset audio to beginning and play
+        dialogNoAudio.currentTime = 0;
+        const playPromise = dialogNoAudio.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log('Dialog no sound played');
+          }).catch(error => {
+            console.log('Dialog no sound play failed:', error);
+          });
+        }
+      }
+    },
+    onDialogNoSoundLoaded() {
+      this.dialogNoSoundLoaded = true;
+      console.log('Dialog no sound loaded successfully');
+    },
+    onDialogNoSoundError(error) {
+      console.error('Error loading dialog no sound:', error);
+      this.dialogNoSoundLoaded = false;
+    },
+    handleLogout() {
+      // Close user menu
+      this.showUserMenu = false;
+      // Emit logout event to parent component
+      this.$emit('logout');
+    },
+    toggleUserMenu() {
+      this.showUserMenu = !this.showUserMenu;
+    },
+    getAvatarText(username) {
+      if (!username) return 'P';
+      // Get first letter of username, or first two letters if it's a single character
+      if (username.length === 1) {
+        return username.toUpperCase();
+      }
+      return username.substring(0, 2).toUpperCase();
+    },
+    handleClickOutside(event) {
+      // Close user menu if clicking outside
+      if (this.showUserMenu && !event.target.closest('.user-avatar-container')) {
+        this.showUserMenu = false;
+      }
     }
   },
   mounted() {
@@ -663,12 +921,21 @@ export default {
     
     // Try to load the music when component is mounted
     if (this.$refs.backgroundMusic) {
+      this.$refs.backgroundMusic.volume = 0.7;
       this.$refs.backgroundMusic.load();
       
-      // Try autoplay after a short delay to ensure everything is ready
+      // Try autoplay multiple times to ensure it starts
+      setTimeout(() => {
+        this.attemptAutoplay();
+      }, 500);
+      
       setTimeout(() => {
         this.attemptAutoplay();
       }, 1000);
+      
+      setTimeout(() => {
+        this.attemptAutoplay();
+      }, 2000);
     }
 
     // Load sound effects
@@ -684,6 +951,22 @@ export default {
     if (this.$refs.shuffleSound) {
       this.$refs.shuffleSound.load();
     }
+    if (this.$refs.openDialogSound) {
+      this.$refs.openDialogSound.load();
+    }
+    if (this.$refs.dialogYesSound) {
+      this.$refs.dialogYesSound.load();
+    }
+    if (this.$refs.dialogNoSound) {
+      this.$refs.dialogNoSound.load();
+    }
+
+    // Add click outside listener for user menu
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  beforeUnmount() {
+    // Remove click outside listener
+    document.removeEventListener('click', this.handleClickOutside);
   }
 }
 </script>
