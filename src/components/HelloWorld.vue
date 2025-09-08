@@ -972,5 +972,5 @@ export default {
 </script>
 
 <style>
-@import '../assets/style/main.css';
+@import '../assets/style/main.scss';
 </style>
