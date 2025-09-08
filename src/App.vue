@@ -51,7 +51,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './assets/style/main.scss';
+
 * {
   margin: 0;
   padding: 0;
@@ -64,10 +66,11 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  font-family: $font-family-primary;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font-family-primary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;

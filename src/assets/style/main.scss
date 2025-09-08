@@ -1,4 +1,4 @@
-/* Main SCSS for Card Game */
+// Main SCSS for Card Game
 
 // ===========================================
 // VARIABLES
@@ -64,7 +64,250 @@ $z-background: 1;
 $z-content: 10;
 $z-dropdown: 100;
 $z-modal: 1000;
-$z-tooltip: 2000;
+
+// Fonts
+$font-family-primary: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-text: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+// ===========================================
+// FONT FACES
+// ===========================================
+
+// SF Pro Display Font Family
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Ultralight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-UltralightItalic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-SemiboldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Heavy.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-HeavyItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('@/assets/font/SF-Pro-Display-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+// SF Pro Text Font Family
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-Heavy.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Text';
+  src: url('@/assets/font/SF-Pro-Text-HeavyItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+// SF UI Text (fallback)
+@font-face {
+  font-family: 'SF UI Text';
+  src: url('@/assets/font/SFUIText-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 // ===========================================
 // MIXINS
@@ -82,29 +325,12 @@ $z-tooltip: 2000;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@mixin gradient-text($gradient) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@mixin button-hover($scale: 1.05) {
-  transition: all $transition-normal;
-  
-  &:hover {
-    transform: scale($scale);
-  }
-}
-
 @mixin responsive($breakpoint) {
   @if $breakpoint == mobile {
     @media (max-width: 480px) { @content; }
-  }
-  @if $breakpoint == tablet {
+  } @else if $breakpoint == tablet {
     @media (max-width: 768px) { @content; }
-  }
-  @if $breakpoint == desktop {
+  } @else if $breakpoint == desktop {
     @media (min-width: 1400px) { @content; }
   }
 }
@@ -141,7 +367,7 @@ html, body {
 .hello {
   margin: 0;
   padding: 0;
-  background: var(--level-background, url('../bg-lvl-1.jpg'));
+  background: var(--level-background, url('@/assets/bg-lvl-1.jpg'));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -701,39 +927,116 @@ html, body {
 // ===========================================
 
 .reset-shuffle-button {
-  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
-  background-size: 200% 200%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-size: 300% 300%;
   color: $white;
   border: none;
-  border-radius: $radius-md;
-  padding: 14px 28px;
+  border-radius: $radius-lg;
+  padding: 16px 32px;
   font-size: 16px;
   font-weight: 600;
+  font-family: $font-family-primary;
   cursor: pointer;
   transition: all $transition-cubic;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 
+    0 8px 25px rgba(102, 126, 234, 0.3),
+    0 4px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
   animation: buttonGradient 4s ease infinite;
   @include flex-center;
-  gap: 8px;
-  min-width: 200px;
+  gap: 12px;
+  min-width: 220px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+  }
 
   &:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 
+      0 15px 35px rgba(102, 126, 234, 0.4),
+      0 8px 15px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background-size: 200% 200%;
+    
+    &::before {
+      left: 100%;
+    }
   }
 
   &:active {
     transform: translateY(-1px) scale(1.01);
+    box-shadow: 
+      0 8px 20px rgba(102, 126, 234, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .button-icon {
+    font-size: 18px;
+    transition: transform $transition-normal;
+    display: inline-block;
+  }
+
+  .button-text {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover .button-icon {
+    transform: rotate(180deg) scale(1.1);
   }
 
   &.shuffle-animation {
     animation: shuffleEffect 0.8s ease-in-out;
+    
+    .button-icon {
+      animation: spin 0.8s linear infinite;
+    }
   }
 
   &.shuffle-success {
     animation: shuffleSuccess 0.5s ease-out;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    box-shadow: 
+      0 8px 25px rgba(39, 174, 96, 0.4),
+      0 4px 10px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    
+    .button-icon {
+      transform: scale(1.2);
+    }
+  }
+
+  // Subtle pulse effect for attention
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+    height: 100%;
+    border-radius: $radius-lg;
   }
 }
 
@@ -787,6 +1090,11 @@ html, body {
   }
 }
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .button-icon {
   font-size: 18px;
 }
@@ -802,8 +1110,9 @@ html, body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.6s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.8s ease;
+  border-radius: inherit;
 
   .reset-shuffle-button:hover & {
     left: 100%;
@@ -1445,7 +1754,10 @@ html, body {
   }
   
   .reset-shuffle-button {
-    width: 180px;
+    width: 200px;
+    padding: 14px 24px;
+    font-size: 15px;
+    min-width: 180px;
   }
   
   .opened-card-item {
@@ -1579,7 +1891,14 @@ html, body {
   
   .reset-shuffle-button {
     width: 100%;
-    max-width: 180px;
+    max-width: 200px;
+    padding: 12px 20px;
+    font-size: 14px;
+    gap: 8px;
+    
+    .button-icon {
+      font-size: 16px;
+    }
   }
   
   .opened-card-item {
@@ -1832,7 +2151,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   height: 100vh;
   overflow: hidden;
   @include flex-center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: $font-family-primary;
 }
 
 // Animated Background
@@ -2019,7 +2338,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   bottom: -10px;
   background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
   border-radius: $radius-full;
-  animation: pulse 2s ease-in-out infinite;
+  animation: logoPulse 2s ease-in-out infinite;
   z-index: 1;
 }
 
@@ -2028,7 +2347,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   50% { transform: translateY(-10px); }
 }
 
-@keyframes pulse {
+@keyframes logoPulse {
   0%, 100% { opacity: 0.5; transform: scale(1); }
   50% { opacity: 0.8; transform: scale(1.1); }
 }
@@ -2166,7 +2485,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-  animation: buttonGradient 3s ease infinite;
+  animation: loginButtonGradient 3s ease infinite;
 
   &:hover:not(:disabled) {
     transform: translateY(-3px) scale(1.02);
@@ -2184,7 +2503,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   }
 }
 
-@keyframes buttonGradient {
+@keyframes loginButtonGradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
@@ -2322,7 +2641,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   height: 4px;
   background: rgba(255, 255, 255, 0.6);
   border-radius: $radius-full;
-  animation: particleFloat 8s linear infinite;
+  animation: loginParticleFloat 8s linear infinite;
 
   &:nth-child(odd) {
     animation-duration: 6s;
@@ -2333,7 +2652,7 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   }
 }
 
-@keyframes particleFloat {
+@keyframes loginParticleFloat {
   0% {
     transform: translateY(100vh) translateX(0);
     opacity: 0;
@@ -2347,6 +2666,352 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   100% {
     transform: translateY(-100px) translateX(100px);
     opacity: 0;
+  }
+}
+
+// ===========================================
+// FIREWORKS ANIMATIONS
+// ===========================================
+
+@keyframes fireworkRocket {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20vh) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes fireworkExplosion {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes fireworkParticle {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--random-x), var(--random-y)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fireworkGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--firework-color);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--firework-color), 0 0 60px var(--firework-color);
+  }
+}
+
+@keyframes ambientGlow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes rocketTrail {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+  }
+}
+
+@keyframes explosionRing {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+@keyframes particleGlow {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+// ===========================================
+// FIREWORKS STYLES
+// ===========================================
+
+.fireworks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(255, 217, 61, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(168, 230, 207, 0.1) 0%, transparent 50%);
+    animation: ambientGlow 4s ease-in-out infinite alternate;
+  }
+}
+
+.firework-rocket {
+  position: absolute;
+  width: 6px;
+  height: 25px;
+  background: linear-gradient(to top, #ff6b6b, #ffd93d, #4ecdc4);
+  border-radius: 3px;
+  animation: fireworkRocket 2s ease-out forwards;
+  box-shadow: 
+    0 0 15px rgba(255, 107, 107, 0.9),
+    0 0 30px rgba(255, 107, 107, 0.5),
+    inset 0 0 5px rgba(255, 255, 255, 0.3);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ffd93d, transparent);
+    border-radius: 50%;
+    animation: rocketTrail 2s ease-out forwards;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, rgba(255, 217, 61, 0.6), transparent);
+    border-radius: 50%;
+    animation: rocketTrail 2s ease-out forwards;
+  }
+}
+
+.firework-explosion {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: fireworkExplosion 1s ease-out forwards;
+  box-shadow: 
+    0 0 20px var(--firework-color),
+    0 0 40px var(--firework-color),
+    0 0 60px var(--firework-color);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--firework-color);
+    border-radius: 50%;
+    animation: explosionRing 1s ease-out forwards;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--firework-color);
+    border-radius: 50%;
+    animation: explosionRing 1s ease-out 0.1s forwards;
+  }
+}
+
+.firework-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: fireworkParticle 1.5s ease-out forwards;
+  box-shadow: 
+    0 0 8px var(--firework-color),
+    0 0 16px var(--firework-color);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, var(--firework-color), transparent);
+    border-radius: 50%;
+    animation: particleGlow 1.5s ease-out forwards;
+  }
+}
+
+// Firework colors
+.firework-red {
+  --firework-color: #ff6b6b;
+  background: linear-gradient(45deg, #ff6b6b, #ff8a80);
+}
+
+.firework-blue {
+  --firework-color: #4ecdc4;
+  background: linear-gradient(45deg, #4ecdc4, #26c6da);
+}
+
+.firework-yellow {
+  --firework-color: #ffd93d;
+  background: linear-gradient(45deg, #ffd93d, #ffeb3b);
+}
+
+.firework-purple {
+  --firework-color: #a8e6cf;
+  background: linear-gradient(45deg, #a8e6cf, #81c784);
+}
+
+.firework-pink {
+  --firework-color: #ff8a80;
+  background: linear-gradient(45deg, #ff8a80, #f8bbd9);
+}
+
+.firework-green {
+  --firework-color: #81c784;
+  background: linear-gradient(45deg, #81c784, #4caf50);
+}
+
+.firework-orange {
+  --firework-color: #ffb74d;
+  background: linear-gradient(45deg, #ffb74d, #ff9800);
+}
+
+.firework-cyan {
+  --firework-color: #4dd0e1;
+  background: linear-gradient(45deg, #4dd0e1, #00bcd4);
+}
+
+.firework-magenta {
+  --firework-color: #e91e63;
+  background: linear-gradient(45deg, #e91e63, #f06292);
+}
+
+.firework-lime {
+  --firework-color: #cddc39;
+  background: linear-gradient(45deg, #cddc39, #8bc34a);
+}
+
+.firework-indigo {
+  --firework-color: #3f51b5;
+  background: linear-gradient(45deg, #3f51b5, #5c6bc0);
+}
+
+.firework-teal {
+  --firework-color: #009688;
+  background: linear-gradient(45deg, #009688, #26a69a);
+}
+
+// Level up celebration overlay
+.level-up-celebration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.level-up-message {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 30px 50px;
+  border-radius: 20px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: levelUpBounce 1s ease-out;
+  font-family: $font-family-primary;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes levelUpBounce {
+  0% {
+    transform: scale(0.3) translateY(-50px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
   }
 }
 
@@ -2413,5 +3078,26 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   .guest-button {
     padding: 12px $spacing-lg;
     font-size: 14px;
+  }
+  
+  // Fireworks responsive design
+  .level-up-message {
+    font-size: 2rem;
+    padding: 20px 30px;
+  }
+  
+  .firework-rocket {
+    width: 3px;
+    height: 15px;
+  }
+  
+  .firework-explosion {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .firework-particle {
+    width: 2px;
+    height: 2px;
   }
 }

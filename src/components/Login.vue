@@ -160,5 +160,5 @@ export default {
 </script>
 
 <style>
-@import '../assets/style/main.scss';
+/* SCSS is imported globally in App.vue */
 </style>

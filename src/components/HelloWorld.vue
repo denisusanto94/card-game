@@ -294,6 +294,19 @@
       <source src="../assets/dialog-no.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
+
+    <!-- Fireworks Container -->
+    <div v-if="showFireworks" class="fireworks-container" ref="fireworksContainer">
+      <!-- Fireworks will be dynamically generated here -->
+    </div>
+
+    <!-- Level Up Celebration -->
+    <div v-if="showLevelUpCelebration" class="level-up-celebration" @click="closeLevelUpCelebration">
+      <div class="level-up-message">
+        🎉 LEVEL UP! 🎉<br>
+        <span style="font-size: 1.5rem; opacity: 0.9;">Level {{ currentLevel }}</span>
+      </div>
+    </div>
   </div>      
 </template>
 
@@ -334,6 +347,8 @@ export default {
       dialogYesSoundLoaded: false,
       dialogNoSoundLoaded: false,
       previousLevel: 1,
+      showFireworks: false,
+      showLevelUpCelebration: false,
       showResetDialog: false,
       showUserMenu: false,
       cards:[
@@ -404,6 +419,13 @@ export default {
       if (newLevel > oldLevel && oldLevel > 0) {
         console.log(`Level up! From level ${oldLevel} to level ${newLevel}`);
         this.playLevelUpSound();
+        this.triggerFireworks();
+        this.showLevelUpCelebration = true;
+        
+        // Auto-hide celebration after 3 seconds
+        setTimeout(() => {
+          this.showLevelUpCelebration = false;
+        }, 3000);
       }
       
       // Change background music and background when level changes
@@ -913,6 +935,177 @@ export default {
       if (this.showUserMenu && !event.target.closest('.user-avatar-container')) {
         this.showUserMenu = false;
       }
+    },
+    
+    // Fireworks methods
+    triggerFireworks() {
+      this.showFireworks = true;
+      this.createFireworks();
+      
+      // Hide fireworks after animation completes
+      setTimeout(() => {
+        this.showFireworks = false;
+      }, 4000);
+    },
+    
+    createFireworks() {
+      const container = this.$refs.fireworksContainer;
+      if (!container) return;
+      
+      // Clear any existing fireworks
+      container.innerHTML = '';
+      
+      // Create multiple fireworks with more variety
+      const fireworkCount = 12;
+      const colors = [
+        'firework-red', 'firework-blue', 'firework-yellow', 'firework-purple', 
+        'firework-pink', 'firework-green', 'firework-orange', 'firework-cyan',
+        'firework-magenta', 'firework-lime', 'firework-indigo', 'firework-teal'
+      ];
+      
+      // Create different types of fireworks
+      for (let i = 0; i < fireworkCount; i++) {
+        setTimeout(() => {
+          const colorClass = colors[i % colors.length];
+          const fireworkType = Math.random();
+          
+          if (fireworkType < 0.3) {
+            // Create burst firework (multiple explosions)
+            this.createBurstFirework(container, colorClass);
+          } else if (fireworkType < 0.6) {
+            // Create spiral firework
+            this.createSpiralFirework(container, colorClass);
+          } else {
+            // Create regular firework
+            this.createSingleFirework(container, colorClass);
+          }
+        }, i * 150); // Faster stagger for more excitement
+      }
+    },
+    
+    createSingleFirework(container, colorClass) {
+      // Random position for the firework
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * (window.innerHeight * 0.6) + (window.innerHeight * 0.2); // Upper 60% of screen
+      
+      // Create rocket
+      const rocket = document.createElement('div');
+      rocket.className = 'firework-rocket';
+      rocket.style.left = x + 'px';
+      rocket.style.bottom = '0px';
+      container.appendChild(rocket);
+      
+      // Create explosion after rocket reaches target
+      setTimeout(() => {
+        this.createExplosion(container, x, y, colorClass);
+        rocket.remove();
+      }, 1500);
+    },
+    
+    createExplosion(container, x, y, colorClass, particleCount = 12) {
+      // Create main explosion
+      const explosion = document.createElement('div');
+      explosion.className = `firework-explosion ${colorClass}`;
+      explosion.style.left = x + 'px';
+      explosion.style.top = y + 'px';
+      container.appendChild(explosion);
+      
+      // Create particles with enhanced variety
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `firework-particle ${colorClass}`;
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        
+        // Random direction for particles with more variety
+        const angle = (i / particleCount) * Math.PI * 2;
+        const distance = 40 + Math.random() * 120;
+        const randomX = Math.cos(angle) * distance;
+        const randomY = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--random-x', randomX + 'px');
+        particle.style.setProperty('--random-y', randomY + 'px');
+        
+        // Add random delay for more natural effect
+        particle.style.animationDelay = Math.random() * 0.2 + 's';
+        
+        container.appendChild(particle);
+        
+        // Remove particles after animation
+        setTimeout(() => {
+          if (particle.parentNode) {
+            particle.remove();
+          }
+        }, 1500 + Math.random() * 500);
+      }
+      
+      // Remove explosion after animation
+      setTimeout(() => {
+        if (explosion.parentNode) {
+          explosion.remove();
+        }
+      }, 1000);
+    },
+    
+    closeLevelUpCelebration() {
+      this.showLevelUpCelebration = false;
+    },
+    
+    // New firework types
+    createBurstFirework(container, colorClass) {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * (window.innerHeight * 0.6) + (window.innerHeight * 0.2);
+      
+      // Create rocket
+      const rocket = document.createElement('div');
+      rocket.className = 'firework-rocket';
+      rocket.style.left = x + 'px';
+      rocket.style.bottom = '0px';
+      container.appendChild(rocket);
+      
+      // Create multiple explosions after rocket reaches target
+      setTimeout(() => {
+        rocket.remove();
+        
+        // Create 3-5 smaller explosions in a cluster
+        const burstCount = 3 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < burstCount; i++) {
+          setTimeout(() => {
+            const offsetX = (Math.random() - 0.5) * 100;
+            const offsetY = (Math.random() - 0.5) * 100;
+            this.createExplosion(container, x + offsetX, y + offsetY, colorClass, 8);
+          }, i * 100);
+        }
+      }, 1500);
+    },
+    
+    createSpiralFirework(container, colorClass) {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * (window.innerHeight * 0.6) + (window.innerHeight * 0.2);
+      
+      // Create rocket
+      const rocket = document.createElement('div');
+      rocket.className = 'firework-rocket';
+      rocket.style.left = x + 'px';
+      rocket.style.bottom = '0px';
+      container.appendChild(rocket);
+      
+      // Create spiral explosion after rocket reaches target
+      setTimeout(() => {
+        rocket.remove();
+        
+        // Create spiral pattern of explosions
+        const spiralCount = 8;
+        for (let i = 0; i < spiralCount; i++) {
+          setTimeout(() => {
+            const angle = (i / spiralCount) * Math.PI * 2;
+            const radius = 30 + i * 10;
+            const spiralX = x + Math.cos(angle) * radius;
+            const spiralY = y + Math.sin(angle) * radius;
+            this.createExplosion(container, spiralX, spiralY, colorClass, 6);
+          }, i * 80);
+        }
+      }, 1500);
     }
   },
   mounted() {
@@ -964,6 +1157,7 @@ export default {
     // Add click outside listener for user menu
     document.addEventListener('click', this.handleClickOutside);
   },
+  
   beforeUnmount() {
     // Remove click outside listener
     document.removeEventListener('click', this.handleClickOutside);
@@ -972,5 +1166,5 @@ export default {
 </script>
 
 <style>
-@import '../assets/style/main.scss';
+/* SCSS is imported globally in App.vue */
 </style>
