@@ -1,0 +1,22 @@
+// ===========================================
+// DESKTOP RESPONSIVE STYLES
+// ===========================================
+
+@import '../mixins';
+
+@include responsive(desktop) {
+  // Main container
+  .hello {
+    background-attachment: fixed;
+  }
+  
+  // Level display
+  .level-display-container {
+    max-width: 800px;
+  }
+  
+  // Opened cards
+  .opened-cards-list {
+    @include flex-center;
+  }
+}

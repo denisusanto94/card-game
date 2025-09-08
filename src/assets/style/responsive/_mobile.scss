@@ -1,0 +1,174 @@
+// ===========================================
+// MOBILE RESPONSIVE STYLES
+// ===========================================
+
+@import '../mixins';
+
+@include responsive(mobile) {
+  // Main container
+  .hello {
+    padding: 0;
+  }
+  
+  // Level container
+  .level-container img {
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+  }
+  
+  // Level display
+  .level-display-container {
+    margin: 5px;
+    padding: $spacing-sm;
+  }
+  
+  // Card controls
+  .card-controls-container {
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding-top: $spacing-sm;
+    padding-bottom: $spacing-sm;
+    
+    button {
+      width: 100%;
+      max-width: 200px;
+      min-width: auto;
+      padding: 12px $spacing-lg;
+      font-size: 14px;
+    }
+  }
+  
+  // Reset shuffle button
+  .reset-shuffle-button {
+    width: 100%;
+    max-width: 200px;
+    padding: 12px 20px;
+    font-size: 14px;
+    gap: 8px;
+    
+    .button-icon {
+      font-size: 16px;
+    }
+  }
+  
+  // Opened cards
+  .opened-card-item {
+    width: 100%;
+    max-width: 200px;
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .opened-card-image {
+    width: 40px;
+    height: 40px;
+    margin-right: $spacing-sm;
+    margin-bottom: 0;
+  }
+  
+  .opened-card-info {
+    text-align: left;
+  }
+  
+  // Wheel of fortune
+  .wheel-of-fortune-container {
+    margin: $spacing-sm auto;
+    width: 180px;
+    height: 180px;
+  }
+  
+  .wheel {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .wheel-center {
+    width: 50px;
+    height: 50px;
+    font-size: 12px;
+  }
+  
+  // Progress bar
+  .progress-bar-container {
+    margin: $spacing-sm auto;
+    
+    img {
+      width: 150px;
+      height: auto;
+    }
+  }
+  
+  // User menu
+  .user-avatar-container {
+    top: $spacing-sm;
+    left: $spacing-sm;
+  }
+  
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+  
+  .user-menu {
+    top: 45px;
+    left: $spacing-sm;
+    min-width: 160px;
+  }
+  
+  // Login styles
+  .login-content {
+    padding: $spacing-sm;
+    max-width: 350px;
+  }
+  
+  .login-card {
+    padding: $spacing-xxl $spacing-lg;
+  }
+  
+  .title-text {
+    font-size: 24px;
+  }
+  
+  .login-logo {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .form-input {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .login-button {
+    padding: 14px;
+    font-size: 15px;
+  }
+  
+  .guest-button {
+    padding: 12px $spacing-lg;
+    font-size: 14px;
+  }
+  
+  // Fireworks responsive design
+  .level-up-message {
+    font-size: 2rem;
+    padding: 20px 30px;
+  }
+  
+  .firework-rocket {
+    width: 3px;
+    height: 15px;
+  }
+  
+  .firework-explosion {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .firework-particle {
+    width: 2px;
+    height: 2px;
+  }
+}

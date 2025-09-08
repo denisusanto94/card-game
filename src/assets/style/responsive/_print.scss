@@ -1,0 +1,19 @@
+// ===========================================
+// PRINT STYLES
+// ===========================================
+
+@import '../mixins';
+
+@media print {
+  .hello {
+    background: $white !important;
+    color: $black !important;
+  }
+  
+  .level-display-container,
+  .wheel-of-fortune-container {
+    background: $white !important;
+    color: $black !important;
+    border: 1px solid $black !important;
+  }
+}

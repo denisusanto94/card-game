@@ -1,0 +1,139 @@
+// ===========================================
+// TABLET RESPONSIVE STYLES
+// ===========================================
+
+@import '../mixins';
+
+@include responsive(tablet) {
+  // Main container
+  .hello {
+    background-attachment: scroll;
+    min-height: 100vh;
+    padding: 0;
+  }
+  
+  // Level container
+  .level-container {
+    padding-top: $spacing-sm;
+    padding-bottom: $spacing-sm;
+    
+    img {
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+    }
+  }
+  
+  // Level display
+  .level-display-container {
+    margin: $spacing-sm;
+    padding: $spacing-md;
+  }
+  
+  // Card controls
+  .card-controls-container {
+    gap: $spacing-md;
+    padding-top: $spacing-md;
+    padding-bottom: $spacing-md;
+    
+    button {
+      min-width: 140px;
+      padding: $spacing-sm 16px;
+      font-size: 14px;
+    }
+  }
+  
+  // Reset shuffle button
+  .reset-shuffle-button {
+    width: 200px;
+    padding: 14px 24px;
+    font-size: 15px;
+    min-width: 180px;
+  }
+  
+  // Opened cards
+  .opened-card-item {
+    min-width: 80px;
+    padding: 8px;
+  }
+  
+  .opened-card-image {
+    width: 50px;
+    height: 50px;
+  }
+  
+  // Wheel of fortune
+  .wheel-of-fortune-container {
+    margin: $spacing-lg auto;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .wheel {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .wheel-center {
+    width: 60px;
+    height: 60px;
+    font-size: 14px;
+  }
+  
+  // Progress bar
+  .progress-bar-container {
+    margin: $spacing-md auto;
+    
+    img {
+      width: 200px;
+      height: auto;
+    }
+  }
+  
+  // User menu
+  .user-avatar-container {
+    top: $spacing-md;
+    left: $spacing-md;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  
+  .user-menu {
+    top: 50px;
+    left: $spacing-md;
+    min-width: 180px;
+  }
+  
+  // Login styles
+  .login-content {
+    padding: $spacing-md;
+    max-width: 380px;
+  }
+  
+  .login-card {
+    padding: 35px $spacing-xl;
+  }
+  
+  .title-text {
+    font-size: 28px;
+  }
+  
+  .login-logo {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .form-input {
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+  
+  .login-button {
+    padding: 16px;
+    font-size: 16px;
+  }
+}

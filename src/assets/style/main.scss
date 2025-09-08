@@ -492,19 +492,12 @@ html, body {
   top: $spacing-lg;
   left: $spacing-lg;
   z-index: $z-dropdown;
-  animation: slideInLeft 0.6s ease-out;
+  
+  // Enhanced container styling
+  padding: 8px;
+  border-radius: 20px;
 }
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
 .user-avatar {
   position: relative;
@@ -524,13 +517,25 @@ html, body {
   width: 50px;
   height: 50px;
   border-radius: $radius-full;
-  background: $primary-gradient;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
   @include flex-center;
   box-shadow: 
-    0 8px 20px rgba(102, 126, 234, 0.3),
-    0 0 0 3px rgba(255, 255, 255, 0.1);
+    0 8px 25px rgba(102, 126, 234, 0.4),
+    0 0 0 3px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   position: relative;
   overflow: hidden;
+  transition: all $transition-cubic;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 
+      0 12px 35px rgba(102, 126, 234, 0.5),
+      0 0 0 4px rgba(255, 255, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
 
   &::before {
     content: '';
@@ -539,8 +544,51 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent 50%, rgba(255, 255, 255, 0.1));
     border-radius: $radius-full;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #667eea);
+    background-size: 400% 400%;
+    border-radius: $radius-full;
+    z-index: -1;
+    animation: gradientShift 4s ease infinite, rotate 8s linear infinite;
+    opacity: 0.7;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -548,22 +596,21 @@ html, body {
   color: $white;
   font-weight: 700;
   font-size: 16px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(255, 255, 255, 0.2);
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  transition: all $transition-cubic;
+  
+  .avatar-circle:hover & {
+    transform: scale(1.05);
+    text-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      0 0 15px rgba(255, 255, 255, 0.3);
+  }
 }
 
-.avatar-status {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 12px;
-  height: 12px;
-  background: $success-color;
-  border: 2px solid $white;
-  border-radius: $radius-full;
-  box-shadow: $shadow-sm;
-}
 
 // User Dropdown Menu
 .user-dropdown {
@@ -1718,328 +1765,7 @@ html, body {
 // RESPONSIVE DESIGN
 // ===========================================
 
-@include responsive(tablet) {
-  .hello {
-    background-attachment: scroll;
-    min-height: 100vh;
-    padding: 0;
-  }
-  
-  .level-container {
-    padding-top: $spacing-sm;
-    padding-bottom: $spacing-sm;
-    
-    img {
-      width: 60px;
-      height: 60px;
-      margin: 5px;
-    }
-  }
-  
-  .level-display-container {
-    margin: $spacing-sm;
-    padding: $spacing-md;
-  }
-  
-  .card-controls-container {
-    gap: $spacing-md;
-    padding-top: $spacing-md;
-    padding-bottom: $spacing-md;
-    
-    button {
-      min-width: 140px;
-      padding: $spacing-sm 16px;
-      font-size: 14px;
-    }
-  }
-  
-  .reset-shuffle-button {
-    width: 200px;
-    padding: 14px 24px;
-    font-size: 15px;
-    min-width: 180px;
-  }
-  
-  .opened-card-item {
-    min-width: 80px;
-    padding: 8px;
-  }
-  
-  .opened-card-image {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .wheel-of-fortune-container {
-    margin: $spacing-lg auto;
-    width: 200px;
-    height: 200px;
-  }
-  
-  .wheel {
-    width: 220px;
-    height: 220px;
-  }
-  
-  .segment-text {
-    font-size: 20px;
-    transform: rotate(318deg) translate(35px, 7px);
-  }
 
-  .user-avatar-container {
-    top: $spacing-md;
-    left: $spacing-md;
-  }
-  
-  .avatar-circle {
-    width: 45px;
-    height: 45px;
-  }
-  
-  .avatar-text {
-    font-size: 14px;
-  }
-  
-  .user-dropdown {
-    min-width: 220px;
-  }
-  
-  .dialog-container {
-    max-width: 400px;
-  }
-  
-  .dialog-header {
-    padding: $spacing-xl $spacing-xl $spacing-md $spacing-xl;
-  }
-  
-  .dialog-icon {
-    font-size: 2.5em;
-  }
-  
-  .dialog-header h3 {
-    font-size: 1.5em;
-  }
-  
-  .dialog-content {
-    padding: $spacing-lg $spacing-xl;
-  }
-  
-  .dialog-question {
-    font-size: 1.1em;
-  }
-  
-  .dialog-actions {
-    padding: $spacing-md $spacing-xl $spacing-xl $spacing-xl;
-    gap: $spacing-md;
-  }
-  
-  .dialog-button {
-    padding: 12px $spacing-xl;
-    font-size: 14px;
-    min-width: 100px;
-  }
-
-  .music-control-container {
-    top: $spacing-md;
-    right: $spacing-md;
-  }
-  
-  .music-toggle-button {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-  
-  .music-icon {
-    font-size: 14px;
-  }
-  
-  .music-text {
-    font-size: 10px;
-  }
-}
-
-@include responsive(mobile) {
-  .hello {
-    padding: 0;
-  }
-  
-  .level-container img {
-    width: 50px;
-    height: 50px;
-    margin: 3px;
-  }
-  
-  .level-display-container {
-    margin: 5px;
-    padding: $spacing-sm;
-  }
-  
-  .card-controls-container {
-    flex-direction: column;
-    gap: $spacing-sm;
-    padding-top: $spacing-sm;
-    padding-bottom: $spacing-sm;
-    
-    button {
-      width: 100%;
-      max-width: 200px;
-      min-width: auto;
-      padding: 12px $spacing-lg;
-      font-size: 14px;
-    }
-  }
-  
-  .reset-shuffle-button {
-    width: 100%;
-    max-width: 200px;
-    padding: 12px 20px;
-    font-size: 14px;
-    gap: 8px;
-    
-    .button-icon {
-      font-size: 16px;
-    }
-  }
-  
-  .opened-card-item {
-    width: 100%;
-    max-width: 200px;
-    flex-direction: row;
-    text-align: left;
-  }
-  
-  .opened-card-image {
-    width: 40px;
-    height: 40px;
-    margin-right: $spacing-sm;
-    margin-bottom: 0;
-  }
-  
-  .opened-card-info {
-    text-align: left;
-  }
-  
-  .wheel-of-fortune-container {
-    width: 180px;
-    height: 180px;
-  }
-  
-  .wheel {
-    width: 200px;
-    height: 200px;
-  }
-  
-  .segment-text {
-    font-size: 18px;
-    transform: rotate(318deg) translate(30px, 6px);
-  }
-  
-  .spin-button {
-    width: 70px;
-    height: 70px;
-    font-size: 14px;
-  }
-
-  .user-avatar-container {
-    top: $spacing-sm;
-    left: $spacing-sm;
-  }
-  
-  .avatar-circle {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .avatar-text {
-    font-size: 12px;
-  }
-  
-  .avatar-status {
-    width: 10px;
-    height: 10px;
-  }
-  
-  .user-dropdown {
-    min-width: 200px;
-    top: 55px;
-  }
-  
-  .dropdown-header {
-    padding: $spacing-md;
-    gap: 12px;
-  }
-  
-  .dropdown-avatar {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .dropdown-avatar-text {
-    font-size: 12px;
-  }
-  
-  .dropdown-name {
-    font-size: 14px;
-  }
-  
-  .dropdown-type {
-    font-size: 11px;
-  }
-  
-  .dialog-container {
-    max-width: 350px;
-  }
-  
-  .dialog-header {
-    padding: $spacing-lg $spacing-lg $spacing-md $spacing-lg;
-  }
-  
-  .dialog-icon {
-    font-size: 2em;
-  }
-  
-  .dialog-header h3 {
-    font-size: 1.3em;
-  }
-  
-  .dialog-content {
-    padding: $spacing-md $spacing-lg;
-  }
-  
-  .dialog-actions {
-    flex-direction: column;
-    gap: 12px;
-    padding: $spacing-md $spacing-lg $spacing-lg $spacing-lg;
-  }
-  
-  .dialog-button {
-    width: 100%;
-    min-width: auto;
-    padding: 14px $spacing-lg;
-  }
-  
-  .dialog-info {
-    padding: 12px;
-  }
-  
-  .info-item {
-    font-size: 0.9em;
-  }
-
-  .music-control-container {
-    top: $spacing-sm;
-    right: $spacing-sm;
-  }
-  
-  .music-toggle-button {
-    padding: 6px $spacing-sm;
-    gap: 6px;
-  }
-  
-  .music-text {
-    display: none;
-  }
-}
 
 // Extra small devices
 @media (max-width: 320px) {
@@ -2105,34 +1831,7 @@ html, body {
   }
 }
 
-@include responsive(desktop) {
-  .hello {
-    background-attachment: fixed;
-  }
-  
-  .level-display-container {
-    max-width: 800px;
-  }
-  
-  .opened-cards-list {
-    @include flex-center;
-  }
-}
 
-// Print styles
-@media print {
-  .hello {
-    background: $white !important;
-    color: $black !important;
-  }
-  
-  .level-display-container,
-  .wheel-of-fortune-container {
-    background: $white !important;
-    color: $black !important;
-    border: 1px solid $black !important;
-  }
-}
 
 // ===========================================
 // LOGIN STYLES
@@ -3015,89 +2714,8 @@ $login-input-focus-bg: rgba(255, 255, 255, 0.95);
   }
 }
 
-// Login Responsive Design
-@include responsive(tablet) {
-  .login-content {
-    padding: $spacing-md;
-    max-width: 380px;
-  }
-  
-  .login-card {
-    padding: 35px $spacing-xl;
-  }
-  
-  .title-text {
-    font-size: 28px;
-  }
-  
-  .login-logo {
-    width: 75px;
-    height: 75px;
-  }
-  
-  .form-input {
-    padding: 14px 18px;
-    font-size: 15px;
-  }
-  
-  .login-button {
-    padding: 16px;
-    font-size: 16px;
-  }
-}
+// ===========================================
+// RESPONSIVE STYLES
+// ===========================================
 
-@include responsive(mobile) {
-  .login-content {
-    padding: $spacing-sm;
-    max-width: 350px;
-  }
-  
-  .login-card {
-    padding: $spacing-xxl $spacing-lg;
-  }
-  
-  .title-text {
-    font-size: 24px;
-  }
-  
-  .login-logo {
-    width: 65px;
-    height: 65px;
-  }
-  
-  .form-input {
-    padding: 12px 16px;
-    font-size: 14px;
-  }
-  
-  .login-button {
-    padding: 14px;
-    font-size: 15px;
-  }
-  
-  .guest-button {
-    padding: 12px $spacing-lg;
-    font-size: 14px;
-  }
-  
-  // Fireworks responsive design
-  .level-up-message {
-    font-size: 2rem;
-    padding: 20px 30px;
-  }
-  
-  .firework-rocket {
-    width: 3px;
-    height: 15px;
-  }
-  
-  .firework-explosion {
-    width: 6px;
-    height: 6px;
-  }
-  
-  .firework-particle {
-    width: 2px;
-    height: 2px;
-  }
-}
+@import 'responsive/index';

@@ -130,7 +130,6 @@
         :class="{ 'music-playing': isMusicPlaying }"
       >
         <span class="music-icon">{{ isMusicPlaying ? '🔊' : '🔇' }}</span>
-        <span class="music-text">{{ isMusicPlaying ? 'Music ON' : 'Music OFF' }}</span>
       </button>
     </div>
 
