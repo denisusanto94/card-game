@@ -1,5 +1,10 @@
 <template>
   <div class="login-container">
+    <!-- Language Switcher -->
+    <div class="login-language-switcher">
+      <LanguageSwitcher @language-changed="handleLanguageChange" />
+    </div>
+
     <!-- Animated Background -->
     <div class="login-background">
       <div class="floating-shapes">
@@ -23,10 +28,10 @@
             <div class="logo-glow"></div>
           </div>
           <h1 class="login-title">
-            <span class="title-text">Card Game</span>
+            <span class="title-text">{{ $t('login.title') }}</span>
             <div class="title-underline"></div>
           </h1>
-          <p class="login-subtitle">🎮 Masuk untuk memulai petualangan</p>
+          <p class="login-subtitle">{{ $t('login.subtitle') }}</p>
         </div>
 
         <!-- Enhanced Form -->
@@ -35,14 +40,14 @@
             <div class="input-container">
               <label for="username" class="form-label">
                 <span class="label-icon">👤</span>
-                Username
+                {{ $t('login.username') }}
               </label>
               <input 
                 type="text" 
                 id="username" 
                 v-model="username" 
                 class="form-input"
-                placeholder="Masukkan username"
+                :placeholder="$t('login.usernamePlaceholder')"
                 required
               >
               <div class="input-glow"></div>
@@ -53,14 +58,14 @@
             <div class="input-container">
               <label for="password" class="form-label">
                 <span class="label-icon">🔒</span>
-                Password
+                {{ $t('login.password') }}
               </label>
               <input 
                 type="password" 
                 id="password" 
                 v-model="password" 
                 class="form-input"
-                placeholder="Masukkan password"
+                :placeholder="$t('login.passwordPlaceholder')"
                 required
               >
               <div class="input-glow"></div>
@@ -71,11 +76,11 @@
             <span class="button-content">
               <span v-if="!isLoading" class="button-text">
                 <span class="button-icon">🚀</span>
-                Masuk
+                {{ $t('login.loginButton') }}
               </span>
               <span v-else class="loading-content">
                 <div class="loading-spinner"></div>
-                <span>Loading...</span>
+                <span>{{ $t('login.loading') }}</span>
               </span>
             </span>
             <div class="button-shine"></div>
@@ -85,11 +90,11 @@
         <!-- Enhanced Footer -->
         <div class="login-footer">
           <div class="divider">
-            <span class="divider-text">atau</span>
+            <span class="divider-text">{{ $t('login.or') }}</span>
           </div>
           <button @click="handleGuestLogin" class="guest-button">
             <span class="guest-icon">🎭</span>
-            Masuk sebagai Tamu
+            {{ $t('login.guestLogin') }}
           </button>
         </div>
       </div>
@@ -103,8 +108,13 @@
 </template>
 
 <script>
+import LanguageSwitcher from './LanguageSwitcher.vue'
+
 export default {
   name: 'LoginComponent',
+  components: {
+    LanguageSwitcher
+  },
   data() {
     return {
       username: '',
@@ -115,7 +125,7 @@ export default {
   methods: {
     handleLogin() {
       if (!this.username || !this.password) {
-        alert('Mohon isi username dan password');
+        alert(this.$t('login.fillFields'));
         return;
       }
 
@@ -154,11 +164,28 @@ export default {
       this.$emit('login-success', guestData);
       
       console.log('Guest login successful:', guestData);
+    },
+    handleLanguageChange() {
+      // Force re-render by updating a reactive property
+      this.$forceUpdate();
     }
   }
 }
 </script>
 
-<style>
-/* SCSS is imported globally in App.vue */
+<style lang="scss" scoped>
+.login-language-switcher {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .login-language-switcher {
+    top: 15px;
+    right: 15px;
+  }
+}
 </style>

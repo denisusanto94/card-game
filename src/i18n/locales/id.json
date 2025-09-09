@@ -1,0 +1,45 @@
+{
+  "app": {
+    "title": "Permainan Kartu"
+  },
+  "login": {
+    "title": "Permainan Kartu",
+    "subtitle": "🎮 Masuk untuk memulai petualangan",
+    "username": "Username",
+    "password": "Password",
+    "usernamePlaceholder": "Masukkan username",
+    "passwordPlaceholder": "Masukkan password",
+    "loginButton": "Masuk",
+    "loading": "Loading...",
+    "or": "atau",
+    "guestLogin": "Masuk sebagai Tamu",
+    "fillFields": "Mohon isi username dan password"
+  },
+  "game": {
+    "level": "Level",
+    "xp": "XP",
+    "openedCards": "Kartu Terbuka",
+    "totalLevel": "Total Level",
+    "resetShuffle": "Reset & Shuffle Cards",
+    "spin": "PUTAR",
+    "logout": "Logout",
+    "guestUser": "Pengguna Tamu",
+    "registeredUser": "Pengguna Terdaftar"
+  },
+  "dialog": {
+    "confirmReset": "Konfirmasi Reset",
+    "resetShuffleCards": "Reset & Shuffle Cards",
+    "resetQuestion": "Apakah Anda ingin mereset kartu dan mengacaknya?",
+    "allProgressLost": "Semua progress akan hilang!",
+    "no": "Tidak",
+    "yesReset": "Ya, Reset"
+  },
+  "celebration": {
+    "levelUp": "🎉 LEVEL UP! 🎉"
+  },
+  "language": {
+    "switch": "Ganti Bahasa",
+    "english": "English",
+    "indonesian": "Indonesia"
+  }
+}

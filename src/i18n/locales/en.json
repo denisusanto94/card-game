@@ -1,0 +1,45 @@
+{
+  "app": {
+    "title": "Card Game"
+  },
+  "login": {
+    "title": "Card Game",
+    "subtitle": "🎮 Login to start your adventure",
+    "username": "Username",
+    "password": "Password",
+    "usernamePlaceholder": "Enter username",
+    "passwordPlaceholder": "Enter password",
+    "loginButton": "Login",
+    "loading": "Loading...",
+    "or": "or",
+    "guestLogin": "Login as Guest",
+    "fillFields": "Please fill in username and password"
+  },
+  "game": {
+    "level": "Level",
+    "xp": "XP",
+    "openedCards": "Opened Cards",
+    "totalLevel": "Total Level",
+    "resetShuffle": "Reset & Shuffle Cards",
+    "spin": "SPIN",
+    "logout": "Logout",
+    "guestUser": "Guest User",
+    "registeredUser": "Registered User"
+  },
+  "dialog": {
+    "confirmReset": "Reset Confirmation",
+    "resetShuffleCards": "Reset & Shuffle Cards",
+    "resetQuestion": "Do you want to reset cards and shuffle them?",
+    "allProgressLost": "All progress will be lost!",
+    "no": "No",
+    "yesReset": "Yes, Reset"
+  },
+  "celebration": {
+    "levelUp": "🎉 LEVEL UP! 🎉"
+  },
+  "language": {
+    "switch": "Switch Language",
+    "english": "English",
+    "indonesian": "Indonesian"
+  }
+}

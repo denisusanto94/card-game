@@ -29,14 +29,18 @@
           </div>
           <div class="dropdown-info">
             <h4 class="dropdown-name">{{ userData?.username || 'Player' }}</h4>
-            <p class="dropdown-type">{{ userData?.isGuest ? 'Guest User' : 'Registered User' }}</p>
+            <p class="dropdown-type">{{ userData?.isGuest ? $t('game.guestUser') : $t('game.registeredUser') }}</p>
           </div>
         </div>
         <div class="dropdown-divider"></div>
         <div class="dropdown-actions">
+          <!-- Language Switcher -->
+          <div class="dropdown-language-switcher">
+            <LanguageSwitcher @language-changed="handleLanguageChange" />
+          </div>
           <button @click="handleLogout" class="dropdown-logout">
             <span class="logout-icon"></span>
-            Logout
+            {{ $t('game.logout') }}
           </button>
         </div>
       </div>
@@ -59,7 +63,7 @@
         </div>
       </div>
       <div class="level-info-card">
-        <h2 class="current-level-title">Level {{ currentLevel }}</h2>
+        <h2 class="current-level-title">{{ $t('game.level') }} {{ currentLevel }}</h2>
         <div class="progress-section">
           <div class="progress-bar">
             <div class="progress-fill" :style="{ width: levelProgressPercentage + '%' }"></div>
@@ -95,7 +99,7 @@
     <div v-if="showCard" class="card-controls-container">
       <button class="reset-shuffle-button" @click="resetAndShuffleCards">
         <span class="button-icon">🔄</span>
-        <span class="button-text">Reset & Shuffle Cards</span>
+        <span class="button-text">{{ $t('game.resetShuffle') }}</span>
         <div class="button-shine"></div>
       </button>
     </div>
@@ -138,38 +142,38 @@
       <div class="dialog-container" @click.stop>
         <div class="dialog-header">
           <div class="dialog-icon">⚠️</div>
-          <h3>Konfirmasi Reset</h3>
-          <div class="dialog-subtitle">Reset & Shuffle Cards</div>
+          <h3>{{ $t('dialog.confirmReset') }}</h3>
+          <div class="dialog-subtitle">{{ $t('dialog.resetShuffleCards') }}</div>
         </div>
         <div class="dialog-content">
-          <p class="dialog-question">Apakah Anda ingin mereset kartu dan mengacaknya?</p>
+          <p class="dialog-question">{{ $t('dialog.resetQuestion') }}</p>
           <div class="dialog-warning-box">
             <div class="warning-icon">🚨</div>
-            <p class="dialog-warning">Semua progress akan hilang!</p>
+            <p class="dialog-warning">{{ $t('dialog.allProgressLost') }}</p>
           </div>
           <div class="dialog-info">
             <div class="info-item">
               <span class="info-icon">📊</span>
-              <span>Level: {{ currentLevel }}</span>
+              <span>{{ $t('game.level') }}: {{ currentLevel }}</span>
             </div>
             <div class="info-item">
               <span class="info-icon">⭐</span>
-              <span>XP: {{ totalLevel }}</span>
+              <span>{{ $t('game.xp') }}: {{ totalLevel }}</span>
             </div>
             <div class="info-item">
               <span class="info-icon">🃏</span>
-              <span>Kartu Terbuka: {{ openedCards.length }}</span>
+              <span>{{ $t('game.openedCards') }}: {{ openedCards.length }}</span>
             </div>
           </div>
         </div>
         <div class="dialog-actions">
           <button class="dialog-button dialog-button-no" @click="closeResetDialog">
             <span class="button-icon">❌</span>
-            <span>Tidak</span>
+            <span>{{ $t('dialog.no') }}</span>
           </button>
           <button class="dialog-button dialog-button-yes" @click="confirmReset">
             <span class="button-icon">✅</span>
-            <span>Ya, Reset</span>
+            <span>{{ $t('dialog.yesReset') }}</span>
           </button>
         </div>
       </div>
@@ -198,7 +202,7 @@
         :disabled="isSpinning"
         @click="spinWheel"
       >
-        SPIN
+        {{ $t('game.spin') }}
       </button>
     </div>
 
@@ -302,8 +306,8 @@
     <!-- Level Up Celebration -->
     <div v-if="showLevelUpCelebration" class="level-up-celebration" @click="closeLevelUpCelebration">
       <div class="level-up-message">
-        🎉 LEVEL UP! 🎉<br>
-        <span style="font-size: 1.5rem; opacity: 0.9;">Level {{ currentLevel }}</span>
+        {{ $t('celebration.levelUp') }}<br>
+        <span style="font-size: 1.5rem; opacity: 0.9;">{{ $t('game.level') }} {{ currentLevel }}</span>
       </div>
     </div>
   </div>      
@@ -311,10 +315,12 @@
 
 <script>
 import { VueFlip } from 'vue-flip';
+import LanguageSwitcher from './LanguageSwitcher.vue';
 
 export default {
   components: {
     'vue-flip': VueFlip,
+    LanguageSwitcher
   },
   name: 'HelloWorld',
   props: {
@@ -1105,6 +1111,10 @@ export default {
           }, i * 80);
         }
       }, 1500);
+    },
+    handleLanguageChange() {
+      // Force re-render by updating a reactive property
+      this.$forceUpdate();
     }
   },
   mounted() {
@@ -1164,6 +1174,158 @@ export default {
 }
 </script>
 
-<style>
-/* SCSS is imported globally in App.vue */
+<style lang="scss" scoped>
+.dropdown-language-switcher {
+  margin-bottom: 12px;
+  padding: 0 4px;
+  
+  // Override the language switcher button styles for dropdown context
+  :deep(.language-button) {
+    width: 100%;
+    justify-content: flex-start;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.15));
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: white;
+    
+    &:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.25));
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+    
+    &.active {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.3));
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
+    }
+  }
+  
+  // Style the language icon and text
+  :deep(.language-icon) {
+    font-size: 16px;
+    margin-right: 8px;
+  }
+  
+  :deep(.current-language) {
+    flex: 1;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  :deep(.dropdown-arrow) {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+    margin-left: 8px;
+    
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+  
+  // Position and style the language dropdown
+  :deep(.language-dropdown) {
+    position: absolute;
+    top: 100%;
+    right: 4px;
+    left: 4px;
+    margin-top: 4px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 8px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+    z-index: 1001;
+    animation: dropdownSlideIn 0.3s ease;
+  }
+  
+  // Style language options
+  :deep(.language-option) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    
+    &:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.2));
+      transform: translateX(4px);
+      color: white;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    }
+    
+    &.active {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));
+      color: #10b981;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+    }
+  }
+  
+  :deep(.language-flag) {
+    font-size: 16px;
+  }
+  
+  :deep(.language-name) {
+    flex: 1;
+    font-weight: 500;
+  }
+  
+  :deep(.checkmark) {
+    font-size: 12px;
+    color: #10b981;
+    font-weight: bold;
+  }
+}
+
+// Dropdown animation
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .dropdown-language-switcher {
+    margin-bottom: 10px;
+    padding: 0 2px;
+    
+    :deep(.language-button) {
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+    
+    :deep(.current-language) {
+      font-size: 13px;
+    }
+    
+    :deep(.language-dropdown) {
+      right: 2px;
+      left: 2px;
+      padding: 4px;
+    }
+    
+    :deep(.language-option) {
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+  }
+}
 </style>
