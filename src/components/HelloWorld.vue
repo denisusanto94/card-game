@@ -420,7 +420,7 @@ export default {
       } else if (level >= 2) {
         return require('../assets/bgm-lvl-2.mp3');
       } else {
-        return require('../assets/bgm-lvl-1.mp3');
+        return require('../assets/bgm-lvl-1.mp3'); 
       }
     },
     currentLevelBackground() {
