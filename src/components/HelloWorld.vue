@@ -106,6 +106,21 @@
         <span class="button-text">{{ $t('game.resetShuffle') }}</span>
         <div class="button-shine"></div>
       </button>
+      <button class="reset-shuffle-button" @click="resetAndShuffleCurrentLevel($event)">
+        <span class="button-icon">🃏</span>
+        <span class="button-text">{{ $t('game.resetLevelShuffle') }}</span>
+        <div class="button-shine"></div>
+      </button>
+      <button v-if="showShuffleCurrentLevelButton" class="reset-shuffle-button" @click="shuffleCurrentLevel($event)">
+        <span class="button-icon">🔀</span>
+        <span class="button-text">{{ $t('game.shuffleLevel') }}</span>
+        <div class="button-shine"></div>
+      </button>
+      <button class="reset-shuffle-button" @click="shuffleUnopenedCurrentLevel($event)">
+        <span class="button-icon">🔃</span>
+        <span class="button-text">{{ $t('game.shuffleUnopenedLevel') }}</span>
+        <div class="button-shine"></div>
+      </button>
     </div>
 
     <!-- Enlarged Card Dialog -->
@@ -373,6 +388,7 @@ export default {
       openedImageMap: {},
       showCardDialog: false,
       dialogCardSrc: null,
+      showShuffleCurrentLevelButton: false,
       cards:[
         {image: '1.png', text: 'level 1', level:10, isOpened: false},
         {image: '2.png', text: 'level 1', level:10, isOpened: false},
@@ -601,6 +617,98 @@ export default {
       }, 500)
       
       console.log('Cards reset and shuffled!')
+    },
+    resetAndShuffleCurrentLevel(event) {
+      // Play shuffle sound effect only
+      this.playShuffleSound();
+
+      // Add button animation feedback
+      const button = event && event.target ? event.target : null;
+      if (button && button.classList) {
+        button.classList.add('shuffle-animation');
+      }
+
+      // Reset progress within the current level back to 0 (keep same level)
+      const currentLevelStart = (this.currentLevel - 1) * 50;
+      this.totalLevel = currentLevelStart;
+
+      // Set shuffling state and temporarily hide cards for effect
+      this.isShuffling = true;
+      const wasVisible = this.showCard;
+      this.showCard = false;
+
+      // Reset only card open states for current level; keep XP and level
+      this.cards.forEach(card => {
+        card.isOpened = false;
+      });
+      this.openedCards = [];
+      // Keep openedImageMap entries for other levels; remove current level only
+      const newMap = {};
+      const currentPrefix = `${this.currentLevel}:`;
+      Object.keys(this.openedImageMap).forEach(key => {
+        if (!key.startsWith(currentPrefix)) {
+          newMap[key] = true;
+        }
+      });
+      this.openedImageMap = newMap;
+
+      // Show cards again with shuffle effect
+      setTimeout(() => {
+        this.showCard = wasVisible || true;
+        this.isShuffling = false;
+        if (button && button.classList) {
+          button.classList.remove('shuffle-animation');
+          button.classList.add('shuffle-success');
+          setTimeout(() => {
+            button.classList.remove('shuffle-success');
+          }, 600);
+        }
+      }, 500);
+
+      console.log('Current level cards reset and shuffled');
+    },
+    shuffleCurrentLevel(event) {
+      // Play shuffle sound effect only
+      this.playShuffleSound();
+
+      // Button feedback
+      const button = event && event.target ? event.target : null;
+      if (button && button.classList) {
+        button.classList.add('shuffle-animation');
+      }
+
+      // Shuffle visible cards without changing opened state or XP
+      this.isShuffling = true;
+      const wasVisible = this.showCard;
+      this.showCard = false;
+
+      // Simple Fisher-Yates shuffle on cards array
+      const shuffled = [...this.cards];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      this.cards = shuffled;
+
+      setTimeout(() => {
+        this.showCard = wasVisible || true;
+        this.isShuffling = false;
+        if (button && button.classList) {
+          button.classList.remove('shuffle-animation');
+          button.classList.add('shuffle-success');
+          setTimeout(() => {
+            button.classList.remove('shuffle-success');
+          }, 600);
+        }
+      }, 500);
+
+      console.log('Current level cards shuffled');
+    },
+    shuffleUnopenedCurrentLevel(event) {
+      // Play shuffle SFX
+      this.playShuffleSound();
+
+      console.log(event)
     },
     openCardDialog(src) {
       this.dialogCardSrc = src
@@ -1317,6 +1425,18 @@ export default {
   backdrop-filter: blur(10px);
 }
 
+.card-controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.reset-shuffle-button {
+  flex: 1;
+}
+
 .current-level-title {
   margin: 0 0 10px;
   font-weight: 800;
@@ -1543,4 +1663,6 @@ export default {
     }
   }
 }
+</style>
+<style lang="scss" scoped>
 </style>
