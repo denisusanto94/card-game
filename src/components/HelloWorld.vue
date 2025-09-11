@@ -415,12 +415,16 @@ export default {
     },
     currentLevelMusic() {
       const level = this.currentLevel;
-      if (level >= 3) {
-        return require('../assets/bgm-lvl-3.mp3');
-      } else if (level >= 2) {
-        return require('../assets/bgm-lvl-2.mp3');
+      // Map levels to bgm assets in assets/bgm/
+      // 1 -> warm, 2 -> hot, 3 -> wild, 4 -> taboo
+      if (level >= 4) {
+        return require('../assets/bgm/bgm-taboo.mp3');
+      } else if (level === 3) {
+        return require('../assets/bgm/bgm-wild.mp3');
+      } else if (level === 2) {
+        return require('../assets/bgm/bgm-hot.mp3');
       } else {
-        return require('../assets/bgm-lvl-1.mp3'); 
+        return require('../assets/bgm/bgm-warm.mp3');
       }
     },
     currentLevelBackground() {
@@ -638,8 +642,8 @@ export default {
         // Store current playing state
         const wasPlaying = this.isMusicPlaying;
         
-        // Change the source to Level 1 music
-        audio.src = require('../assets/bgm-lvl-1.mp3');
+        // Change the source to Level 1 music (Warm)
+        audio.src = require('../assets/bgm/bgm-warm.mp3');
         
         // Reload the audio
         audio.load();
