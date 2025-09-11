@@ -494,8 +494,8 @@ html, body {
   z-index: $z-dropdown;
   
   // Enhanced container styling
-  padding: 8px;
-  border-radius: 20px;
+  padding: 6px;
+  border-radius: 16px;
 }
 
 
@@ -514,8 +514,8 @@ html, body {
 }
 
 .avatar-circle {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: $radius-full;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   background-size: 200% 200%;
@@ -595,7 +595,7 @@ html, body {
 .avatar-text {
   color: $white;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   text-shadow: 
     0 1px 3px rgba(0, 0, 0, 0.3),
     0 0 10px rgba(255, 255, 255, 0.2);
@@ -1550,19 +1550,19 @@ html, body {
 
 .music-toggle-button {
   @include flex-center;
-  gap: 8px;
-  padding: $spacing-sm $spacing-md;
+  gap: 6px;
+  padding: 6px 10px;
   border: none;
-  border-radius: $spacing-xl;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   color: $white;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   transition: all $transition-normal;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
   &:hover {
     background: rgba(255, 255, 255, 0.3);
@@ -1572,18 +1572,18 @@ html, body {
 
   &.music-playing {
     background: rgba(46, 204, 113, 0.3);
-    border-color: rgba(46, 204, 113, 0.5);
-    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+    border-color: rgba(46, 204, 113, 0.4);
+    box-shadow: 0 2px 12px rgba(46, 204, 113, 0.28);
 
     &:hover {
       background: rgba(46, 204, 113, 0.4);
-      box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+      box-shadow: 0 4px 16px rgba(46, 204, 113, 0.36);
     }
   }
 }
 
 .music-icon {
-  font-size: 16px;
+  font-size: 14px;
   transition: transform $transition-normal;
 
   .music-toggle-button:hover & {

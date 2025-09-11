@@ -50,20 +50,24 @@
     <div class="level-display-section">
       <div class="level-badges">
         <div class="level-badge" :class="{ 'active': currentLevel >= 1, 'current': currentLevel === 1 }">
-      <img src="../assets/level-1.png" alt="level-1" />
-          <span class="level-number">1</span>
+      <img src="../assets/level-badge/level-1.svg" alt="level-1" />
+          <!-- <span class="level-number">1</span> -->
         </div>
         <div class="level-badge" :class="{ 'active': currentLevel >= 2, 'current': currentLevel === 2 }">
-      <img src="../assets/level-2.png" alt="level-2" />
-          <span class="level-number">2</span>
+      <img src="../assets/level-badge/level-2.svg" alt="level-2" />
+          <!-- <span class="level-number">2</span> -->
         </div>
         <div class="level-badge" :class="{ 'active': currentLevel >= 3, 'current': currentLevel === 3 }">
-      <img src="../assets/level-3.png" alt="level-3" />
-          <span class="level-number">3</span>
+      <img src="../assets/level-badge/level-3.svg" alt="level-3" />
+          <!-- <span class="level-number">3</span> -->
+        </div>
+        <div class="level-badge" :class="{ 'active': currentLevel >= 4, 'current': currentLevel === 4 }">
+      <img src="../assets/level-badge/level-4.svg" alt="level-4" />
+          <!-- <span class="level-number">4</span> -->
         </div>
       </div>
       <div class="level-info-card">
-        <h2 class="current-level-title">{{ $t('game.level') }} {{ currentLevel }}</h2>
+        <h2 class="current-level-title">{{ currentLevelname(currentLevel) }}</h2>
         <div class="progress-section">
           <div class="progress-bar">
             <div class="progress-fill" :style="{ width: levelProgressPercentage + '%' }"></div>
@@ -89,7 +93,7 @@
             </template>
             <template v-slot:back>
               <div class="back">
-                <img :src="getCardImage(slide.image)" alt="card-back" />
+                <img :src="getCardImage(slide.image)" alt="card-back"/>
               </div>
             </template>
           </vue-flip>
@@ -103,6 +107,16 @@
         <div class="button-shine"></div>
       </button>
     </div>
+
+    <!-- Enlarged Card Dialog -->
+    <transition name="carddlg">
+      <div v-if="showCardDialog" class="card-dialog-overlay" @click="closeCardDialog">
+        <div class="card-dialog" @click.stop>
+          <img :src="dialogCardSrc" alt="card-enlarged" class="card-dialog-image" />
+          <button class="card-dialog-close" @click="closeCardDialog">×</button>
+        </div>
+      </div>
+    </transition>
     <!-- <div class="progress-bar-container">
       <img src="../assets/progress-60.png" alt="progress-bar" />
     </div> -->
@@ -356,16 +370,17 @@ export default {
       showLevelUpCelebration: false,
       showResetDialog: false,
       showUserMenu: false,
+      openedImageMap: {},
+      showCardDialog: false,
+      dialogCardSrc: null,
       cards:[
-        {image: '1.jpeg', text: 'level 1', level:10, isOpened: false},
-        {image: '2.jpeg', text: 'level 2', level:10, isOpened: false},
-        {image: '3.jpeg', text: 'level 3', level:10, isOpened: false},
-        {image: '4.jpeg', text: 'level 4', level:10, isOpened: false},
-        {image: '5.jpeg', text: 'level 5', level:10, isOpened: false},
-        {image: '6.jpeg', text: 'level 6', level:10, isOpened: false},
-        {image: '7.jpeg', text: 'level 7', level:10, isOpened: false},
-        {image: '8.jpeg', text: 'level 8', level:30, isOpened: false},
+        {image: '1.png', text: 'level 1', level:10, isOpened: false},
+        {image: '2.png', text: 'level 1', level:10, isOpened: false},
+        {image: '3.png', text: 'level 1', level:10, isOpened: false},
+        {image: '4.png', text: 'level 1', level:10, isOpened: false},
+        {image: '5.png', text: 'level 1', level:10, isOpened: false}
       ],
+      
       segments: [
         {color: '#FF6B6B', text: '1', level:'5'},
         {color: '#4ECDC4', text: '2', level:'5'},
@@ -380,8 +395,8 @@ export default {
   },
   computed: {
     currentLevel() {
-      // Calculate current level based on total level (every 50 levels = 1 level up)
-      return Math.floor(this.totalLevel / 50) + 1;
+      // Calculate current level based on total level (every 50 levels = 1 level up), capped at 4
+      return Math.min(Math.floor(this.totalLevel / 50) + 1, 4);
     },
     levelProgressPercentage() {
       // Calculate progress within current level (0-100%)
@@ -393,7 +408,10 @@ export default {
       const currentLevelStart = (this.currentLevel - 1) * 50;
       const progressInLevel = this.totalLevel - currentLevelStart;
       const nextLevelRequirement = 50;
-      return `${progressInLevel}/${nextLevelRequirement} XP to Level ${this.currentLevel + 1}`;
+      if (this.currentLevel === 4) {
+        return `${progressInLevel}/${nextLevelRequirement} XP (Taboo)`;
+      }
+      return `${progressInLevel}/${nextLevelRequirement} XP to ${this.currentLevelname(this.currentLevel+1)}`;
     },
     currentLevelMusic() {
       const level = this.currentLevel;
@@ -407,12 +425,14 @@ export default {
     },
     currentLevelBackground() {
       const level = this.currentLevel;
-      if (level >= 3) {
-        return require('../assets/bg-lvl-3.jpg');
-      } else if (level >= 2) {
-        return require('../assets/bg-lvl-2.jpg');
+      if (level === 4) {
+        return require('../assets/background/background-taboo.png');
+      } else if (level === 3) {
+        return require('../assets/background/background-wild.png');
+      } else if (level === 2) {
+        return require('../assets/background/background-hot.png');
       } else {
-        return require('../assets/bg-lvl-1.jpg');
+        return require('../assets/background/background-warm.png');
       }
     }
   },
@@ -420,8 +440,8 @@ export default {
     currentLevel(newLevel, oldLevel) {
       console.log(`Level watcher triggered: ${oldLevel} -> ${newLevel}`);
       
-      // Check if level increased
-      if (newLevel > oldLevel && oldLevel > 0) {
+      // Check if level increased (but stop celebrations at MAX level 4)
+      if (newLevel > oldLevel && oldLevel > 0 && newLevel < 4) {
         console.log(`Level up! From level ${oldLevel} to level ${newLevel}`);
         this.playLevelUpSound();
         this.triggerFireworks();
@@ -440,13 +460,15 @@ export default {
         // Add a small delay to ensure the level change is processed
         setTimeout(() => {
           this.changeBackground();
+          // Close all cards and refresh slider
+          this.resetCardsForNewLevel();
         }, 100);
       }
     }
   },
   methods: {
     getCardImage(image) {
-      return require(`../assets/${image}`);
+      return require(`../assets/card/level-${this.currentLevel}/${image}`);
     },
     changeBackgroundMusic() {
       if (!this.musicLoaded) {
@@ -497,10 +519,17 @@ export default {
       // Find the current card that was clicked
       const currentCard = this.cards.find(card => !card.isOpened);
       if (currentCard) {
-        currentCard.isOpened = true;
-        this.openedCards.push({...currentCard});
-        this.totalLevel += currentCard.level;
-        console.log(`Opened ${currentCard.text} - Level ${currentCard.level}`);
+        // Prevent duplicate level gain for the same image
+        const imageKey = `${this.currentLevel}:${currentCard.image}`;
+        if (!this.openedImageMap[imageKey]) {
+          currentCard.isOpened = true;
+          this.openedCards.push({...currentCard});
+          this.totalLevel += currentCard.level;
+          this.openedImageMap[imageKey] = true;
+          console.log(`Opened ${currentCard.text} - Level ${currentCard.level}`);
+        } else {
+          console.log('Duplicate card opened - no level gain');
+        }
       }
     },
     handleWinner(winner) {
@@ -550,6 +579,7 @@ export default {
       // Reset opened cards and level tracking
       this.openedCards = []
       this.totalLevel = 0
+      this.openedImageMap = {}
       
       // Change background music to Level 1 music since we're resetting to Level 1
       this.changeToLevel1Music();
@@ -568,6 +598,29 @@ export default {
       
       console.log('Cards reset and shuffled!')
     },
+    openCardDialog(src) {
+      this.dialogCardSrc = src
+      this.showCardDialog = true
+    },
+    closeCardDialog() {
+      this.showCardDialog = false
+      this.dialogCardSrc = null
+    },
+    resetCardsForNewLevel() {
+      // Reset open states
+      this.cards.forEach(card => {
+        card.isOpened = false
+      })
+      this.openedCards = []
+      this.openedImageMap = {}
+      // Toggle visibility to refresh 3d carousel
+      const wasVisible = this.showCard
+      this.showCard = false
+      setTimeout(() => {
+        this.showCard = wasVisible || true
+      }, 200)
+    },
+    /* revert: removed dynamic card loader */
     closeResetDialog() {
       // Play dialog no sound effect
       this.playDialogNoSound();
@@ -792,6 +845,18 @@ export default {
             console.log('Level up sound play failed:', error);
           });
         }
+      }
+    },
+    currentLevelname(level) {
+      switch (level) {
+        case 1:
+          return this.$t('Warm');
+        case 2:
+          return this.$t('Hot');
+        case 3:
+          return this.$t('Wild');
+        case 4:
+          return this.$t('Taboo');
       }
     },
     onLevelUpSoundLoaded() {
@@ -1052,6 +1117,7 @@ export default {
       }, 1000);
     },
     
+    
     closeLevelUpCelebration() {
       this.showLevelUpCelebration = false;
     },
@@ -1175,6 +1241,151 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.level-display-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 16px 0 20px;
+}
+
+.level-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.level-badge {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(1.12) contrast(1.06);
+    -webkit-filter: saturate(1.12) contrast(1.06);
+  }
+
+  .level-number {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.34);
+  }
+
+  &.active {
+    filter: saturate(1.1) brightness(1.04);
+  }
+
+  &.current {
+    transform: scale(1.06);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.38);
+  }
+}
+
+.level-info-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+  box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+  backdrop-filter: blur(10px);
+}
+
+.current-level-title {
+  margin: 0 0 10px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+}
+
+/* Card Dialog Styles */
+.card-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.card-dialog {
+  position: relative;
+  max-width: 80vw;
+  max-height: 80vh;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+}
+
+.card-dialog-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-dialog-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  color: #111;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Transition for dialog */
+.carddlg-enter-active, .carddlg-leave-active {
+  transition: opacity 0.2s ease, transform 0.24s ease;
+}
+.carddlg-enter-from, .carddlg-leave-to {
+  opacity: 0;
+}
+.carddlg-enter-from .card-dialog {
+  transform: scale(0.88);
+}
+.carddlg-leave-to .card-dialog {
+  transform: scale(0.94);
+}
+
+@media (max-width: 768px) {
+  .level-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+}
+
 .dropdown-language-switcher {
   margin-bottom: 12px;
   padding: 0 4px;
